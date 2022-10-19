@@ -8,3 +8,7 @@ Genomic decomposition and reconstruction of **non-tumor** subclones
 <br/>
 
 ## Usage
+Hello Genome World
+
+## Running
+Run 42.195km
