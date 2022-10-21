@@ -25,10 +25,9 @@ parser.add_argument('--CLEMENT_DIR', default=None, help="Directory where input a
 parser.add_argument('--IMAGE_FORMAT', type=str, choices=["jpg", "pdf", "svg"], default="jpg", help="Output image format")
 
 
-parser.add_argument('--NUM_CLONE_TRIAL_START', type=int, default=5, help="Minimum number of expected cluster_hards (initation of K)")
-parser.add_argument('--NUM_CLONE_TRIAL_END', type=int, default=6, choices=range(1, 11), help="Maximum number of expected cluster_hards (termination of K)")
-parser.add_argument('--NUM_CLONE_TRIAL_FORCE', type=int, default=4, help="Designate the number of expected cluster_hards by force")
-parser.add_argument('--TRIAL_NO', default=3, type=int, choices=range(1, 21), help="Trial number in each candidate cluster_hard number. DO NOT recommend over 15")
+parser.add_argument('--NUM_CLONE_TRIAL_START', type=int, default=2, help="Minimum number of expected cluster_hards (initation of K)")
+parser.add_argument('--NUM_CLONE_TRIAL_END', type=int, default=7, help="Maximum number of expected cluster_hards (termination of K)")
+parser.add_argument('--TRIAL_NO', default=5, type=int, choices=range(1, 21), help="Trial number in each candidate cluster_hard number. DO NOT recommend over 15")
 parser.add_argument('--KMEANS_CLUSTERNO',  type=int, default=8, choices=range(5, 20), help="Number of initial K-means cluster_hard")
 parser.add_argument('--MIN_CLUSTER_SIZE', type=int, default=15, help="The minimum cluster size that is acceptable")
 
@@ -38,8 +37,11 @@ parser.add_argument('--RANDOM_SEED', type=int, default=1, help="random_seed for 
 parser.add_argument('--GAP', type = str, choices = ["new", "old", "sil"], default="new")
 
 # Simulation dataset
-# python3 CLEMENT.py --INPUT_TSV "/data/project/Alzheimer/EM_cluster/EM_input/simulation_2D/clone_4/2D_clone4_0.txt" --NPVAF_DIR "/data/project/Alzheimer/YSscript/EM_MRS/data/npvaf/simulation_2D/clone_4/0"   --NPVAF_DIR "/data/project/Alzheimer/YSscript/EM_MRS/data/CLEMENT/simulation_2D/clone_4/0"   --NUM_CLONE_TRIAL_START 3 --NUM_CLONE_TRIAL_END 4 --DEPTH_CUTOFF 10 --VERBOSE 2 --TRIAL_NO 3  --RANDOM_SEED 1
+# python3 CLEMENT.py --INPUT_TSV "/data/project/Alzheimer/EM_cluster/EM_input/simulation_2D/clone_4/2D_clone4_0.txt" --CLEMENT_DIR "/data/project/Alzheimer/YSscript/EM_MRS/data/CLEMENT/simulation_2D/clone_4/0"   --NUM_CLONE_TRIAL_START 3 --NUM_CLONE_TRIAL_END 4 --DEPTH_CUTOFF 10 --VERBOSE 2 --TRIAL_NO 3  --RANDOM_SEED 1
+# python3 CLEMENT.py --INPUT_TSV "../examples/example1/input.tsv" --NPVAF_DIR "../examples/example1"   --CLEMENT_DIR "../examples/example1"   --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --DEPTH_CUTOFF 10 --VERBOSE 2 --TRIAL_NO 3  --RANDOM_SEED 1
+
 # python3 CLEMENT.py --INPUT_TSV "/data/project/Alzheimer/EM_cluster/EM_input/simulation_3D/clone_4/3D_clone4_0.txt" --NPVAF_DIR "/data/project/Alzheimer/YSscript/EM_MRS/data/npvaf/simulation_3D/clone_4/0"  --NUM_CLONE_TRIAL_START 3 --NUM_CLONE_TRIAL_END 7 --DEPTH_CUTOFF 10 --VERBOSE 1 --TRIAL_NO 3  --RANDOM_SEED 1  --MODE Both
+# python3 CLEMENT.py --INPUT_TSV "../examples/example2/input.tsv" --NPVAF_DIR "../examples/example2"   --CLEMENT_DIR "../examples/example2"   --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --DEPTH_CUTOFF 10 --VERBOSE 1 --TRIAL_NO 3  --RANDOM_SEED 1
 
 
 args = parser.parse_args()
@@ -52,7 +54,7 @@ kwargs["NUM_BLOCK_INPUT"], kwargs["NUM_BLOCK"] = NUM_BLOCK, NUM_BLOCK
 SAMPLENAME = INPUT_TSV.split("/")[-1].split(".")[0]     # 'M1-5_M1-8_input'
 
 kwargs["MODE"] = args.MODE
-kwargs["NUM_CLONE_TRIAL_START"], kwargs["NUM_CLONE_TRIAL_END"], kwargs["NUM_CLONE_TRIAL_FORCE"] = args.NUM_CLONE_TRIAL_START, args.NUM_CLONE_TRIAL_END, args.NUM_CLONE_TRIAL_FORCE
+kwargs["NUM_CLONE_TRIAL_START"], kwargs["NUM_CLONE_TRIAL_END"] = args.NUM_CLONE_TRIAL_START, args.NUM_CLONE_TRIAL_END
 kwargs["RANDOM_PICK"] = int(args.RANDOM_PICK)
 if args.USE_ALL in ["True", "true", True]:
     kwargs["USE_ALL"] = True
@@ -71,15 +73,8 @@ kwargs["GAP"] = str(args.GAP)
 kwargs["NUM_MUTATION"] = kwargs["RANDOM_PICK"]
 NUM_MUTATION = kwargs["RANDOM_PICK"]
 
-if args.NPVAF_DIR == None:
-    kwargs["NPVAF_DIR"] = "/data/project/Alzheimer/YSscript/CLEMENT/data/npvaf/" + SAMPLENAME
-else:
-    kwargs["NPVAF_DIR"] = args.NPVAF_DIR
-    
-if args.CLEMENT_DIR == None:
-    kwargs["CLEMENT_DIR"] = "/data/project/Alzheimer/YSscript/CLEMENT/data/CLEMENT/" + SAMPLENAME
-else:
-    kwargs["CLEMENT_DIR"] = args.CLEMENT_DIR
+kwargs["NPVAF_DIR"] = args.NPVAF_DIR
+kwargs["CLEMENT_DIR"] = args.CLEMENT_DIR
 
 
 
@@ -312,7 +307,7 @@ for i, priority in enumerate(["1st", "2nd"]):
 
 pd.DataFrame(cluster_answer.membership_record [NUM_CLONE_answer[i]]).to_csv (kwargs["CLEMENT_DIR"] + "/CLEMENT_decision.membership.txt", index = False, header= False,  sep = "\t" )
 pd.DataFrame(cluster_answer.mixture_record [NUM_CLONE_answer[i]],).to_csv (kwargs["CLEMENT_DIR"] + "/CLEMENT_decision.mixture.txt", index = False, header= False,  sep = "\t" )
-subprocess.run (["cp " +  kwargs["CLEMENT_DIR"]+ "/candidate/clone" + str(NUM_CLONE_answer[i]) + ".(" + DECISION.split("_")[0] + ")." + kwargs["IMAGE_FORMAT"] + "  " +  kwargs["CLEMENT_DIR"]+ "/CLEMENT_" + DECISION +"." + kwargs["IMAGE_FORMAT"]], shell = True)
+subprocess.run (["cp " +  kwargs["CLEMENT_DIR"]+ "/candidate/clone" + str(NUM_CLONE_answer[i]) + ".\(" + DECISION.split("_")[0] + "\)." + kwargs["IMAGE_FORMAT"] + "  " +  kwargs["CLEMENT_DIR"]+ "/CLEMENT_decision." + kwargs["IMAGE_FORMAT"]], shell = True)
 
         
         

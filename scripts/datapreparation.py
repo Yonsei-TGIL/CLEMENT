@@ -18,8 +18,6 @@ def makedf (**kwargs):
     mutation_id = []
     membership = []
     depth_list = []
-    
-    #print ( input_containpos )
 
     # INPUT_FORMAT (n * 3) :   ID (chr_pos), membmership(정답 set 일 경우),  NUM_BLOCK_INPUT(3)만큼의 depth, alt 정보
 
@@ -116,7 +114,8 @@ def print_record (**kwargs):
     # print np_vaf + membership to csv  ( PICK only RANDOM_PICK )
     t = pd.DataFrame(np_vaf, columns = ["block{0}".format(i) for i in range(NUM_BLOCK_INPUT)], index = mutation_id)
     t["membership_answer"] = pd.Series(membership_answer, index = mutation_id)
-    t.to_csv ("{}.npvaf".format( kwargs["NPVAF_DIR"] ), index = True, header=True, sep = "\t")
+    t.to_csv ("{}/input.npvaf".format( kwargs["NPVAF_DIR"] ), index = True, header=True, sep = "\t")
+    print ( "{}/input.npvaf".format( kwargs["NPVAF_DIR"] ) )
 
 
     samplename_dict, cnt = {}, 0

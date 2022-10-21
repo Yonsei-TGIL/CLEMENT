@@ -18,8 +18,7 @@
 - scikit-learn 1.0.2
 - scipy 1.7.3
 - palettable 3.3.0
-- itertools
-- comb
+
 ### Install from github (requires Python 3.6.* or newer)
 1. https://github.com/Yonsei-TGIL/CLEMENT.git
 2. cd CLEMENT/scripts
