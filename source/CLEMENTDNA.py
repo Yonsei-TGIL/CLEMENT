@@ -8,21 +8,20 @@ pd.options.mode.chained_assignment = None
 kwargs = {}
 
 parser = argparse.ArgumentParser(description='The below is usage direction.')
-parser.add_argument('--INPUT_TSV', type=str, default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8/M1-3_M1-8_input.txt",  help="Path where TSV format file locate. The tool automatically detects the number of samples")
-parser.add_argument('--NPVAF_DIR', default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8",  help="Directory where selected datasets are (Important : DIRECTORY (O), File path (X) )")
-parser.add_argument('--CLEMENT_DIR', default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8",   help="Directory where input and output of CLEMENT deposits")
-parser.add_argument('--MODE', type=str, choices=["Hard", "Soft", "Both"], default="Hard", help="Selection of clustering method.")
-parser.add_argument('--RANDOM_PICK', type=int, default=500,  help="The number of mutations that are randomly selected in each trials")
-parser.add_argument('--NUM_CLONE_TRIAL_START', type=int, default=3,  help="Minimum number of expected cluster_hards (initation of K)")
-parser.add_argument('--NUM_CLONE_TRIAL_END', type=int, default=3, choices=range(1, 11), help="Maximum number of expected cluster_hards (termination of K)")
-parser.add_argument('--TRIAL_NO', default=3, type=int, choices=range(1, 21),  help="Trial number in each candidate cluster_hard number. DO NOT recommend over 20")
-parser.add_argument('--MAXIMUM_NUM_PARENT',  default=2, type=int,  help="The maximum number of parents in the given samples.")
-parser.add_argument('--TN_CONFIDENTIALITY', default=0.995, type=float, help="Confidentiality that negative being negative (TN). Recommendation : > 0.99")
-parser.add_argument('--MIN_CLUSTER_SIZE', type=int, default=9, help="The minimum number of membersip in single cluster.")
-parser.add_argument('--VERBOSE', type=int, choices=[0, 1, 2, 3], default=0)
-parser.add_argument('--KMEANS_CLUSTERNO',  type=int, default=8,  choices=range(5, 20), help="Number of initial K-means cluster_hard (5~8 recommended for one-sample, 8-15 recommended for larger-sample)")
+parser.add_argument('--INPUT_TSV', type=str, default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8/M1-3_M1-8_input.txt",  help="Path where TSV format file locate. (Important : DIRECTORY (X), File path (O) )")
+parser.add_argument('--CLEMENT_DIR', default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8",   help="Directory where input and output of CLEMENT deposits (Important : DIRECTORY (O), File path (X) )")
+parser.add_argument('--MODE', type=str, choices=["Hard", "Soft", "Both"], default="Both", help="Selection of clustering method. Default : Both")
+parser.add_argument('--RANDOM_PICK', type=int, default=-1,  help="The number of mutations to alleviate the computational load. Default : -1 (load the whole data)")
+parser.add_argument('--KMEANS_CLUSTERNO',  type=int, default=8,  choices=range(5, 20), help="Number of initial K-means cluster. Recommendation : 5~8 for one-sample, 8-15 for larger-sample. Default : 8")
+parser.add_argument('--NUM_CLONE_TRIAL_START', type=int, default=3,  help="Minimum number of expected cluster_hards (initation of K). Default : 3")
+parser.add_argument('--NUM_CLONE_TRIAL_END', type=int, default=3, choices=range(1, 11), help="Maximum number of expected cluster_hards (termination of K). Default : 5")
+parser.add_argument('--TRIAL_NO', default=5, type=int, choices=range(1, 21),  help="The number of trials in each candidate clone number. DO NOT recommend over 20. Default : 5")
+parser.add_argument('--MAXIMUM_NUM_PARENT',  default=1, type=int,  help="The maximum number of parents in the given samples. Recommendation : 0-2. Default : 1")
+parser.add_argument('--MIN_CLUSTER_SIZE', type=int, default=9, help="The minimum number of membersip in single cluster. Default : 9")
 parser.add_argument('--RANDOM_SEED', type=int, default=1,  help="random_seed for regular random sampling")
-parser.add_argument('--MAKEONE_STRICT', type=int,  choices=[1, 2], default = 1, help="1:strict, 2:lenient")
+parser.add_argument('--MAKEONE_STRICT', type=int,  choices=[1, 2], default = 1, help="1:strict, 2:lenient. Default : 1")
+parser.add_argument('--TN_CONFIDENTIALITY', default=0.995, type=float, help="Confidentiality that negative being negative (TN). Recommendation : > 0.99. Default : 0.995")
+parser.add_argument('--VERBOSE', type=int, choices=[0, 1, 2, 3], default=2, help="0: Verbose, 3: Concise. Default : 2")
 
 
 args = parser.parse_args()
@@ -42,7 +41,6 @@ kwargs["KMEANS_CLUSTERNO"] = args.KMEANS_CLUSTERNO
 kwargs["RANDOM_SEED"] = int(args.RANDOM_SEED)
 kwargs["SCORING"] = False
 kwargs["MAKEONE_STRICT"] = int(args.MAKEONE_STRICT)
-kwargs["NPVAF_DIR"] = args.NPVAF_DIR
 kwargs["CLEMENT_DIR"] = args.CLEMENT_DIR
 kwargs["method"] = "gap+normal"
 kwargs["adjustment"] = "half"
@@ -64,14 +62,17 @@ for DIR in [ kwargs["CLEMENT_DIR"] + "/trial",  kwargs["CLEMENT_DIR"] + "/Kmeans
         os.system("mkdir -p " + DIR)
 
 with open (kwargs["CLEMENT_DIR"] + "/0.commandline.txt", "w" , encoding="utf8" ) as output_logfile:
-    print ("python3 CLEMENTDNA.py  --INPUT_TSV {} --NUM_CLONE_TRIAL_START {} --NUM_CLONE_TRIAL_END {}  --RANDOM_PICK {} --MIN_CLUSTER_SIZE {}   --KMEANS_CLUSTERNO {}  --NPVAF_DIR {} --CLEMENT_DIR {}  --MODE {} \
-                --TN_CONFIDENTIALITY {} --MAKEONE_STRICT {} --MAXIMUM_NUM_PARENT {} --TRIAL_NO {}  --VERBOSE {}".format(kwargs["INPUT_TSV"], kwargs["NUM_CLONE_TRIAL_START"], kwargs["NUM_CLONE_TRIAL_END"],  kwargs["RANDOM_PICK"], kwargs["MIN_CLUSTER_SIZE"], kwargs["KMEANS_CLUSTERNO"],  kwargs["NPVAF_DIR"], kwargs["CLEMENT_DIR"], kwargs["MODE"], kwargs["TN_CONFIDENTIALITY"], kwargs["MAKEONE_STRICT"], kwargs["MAXIMUM_NUM_PARENT"], kwargs["TRIAL_NO"],   kwargs["VERBOSE"]  ),         file = output_logfile)
+    print ("python3 CLEMENTDNA.py  --INPUT_TSV {} --NUM_CLONE_TRIAL_START {} --NUM_CLONE_TRIAL_END {}  --RANDOM_PICK {} --MIN_CLUSTER_SIZE {}   --KMEANS_CLUSTERNO {}   --CLEMENT_DIR {}  --MODE {} \
+                --TN_CONFIDENTIALITY {} --MAKEONE_STRICT {} --MAXIMUM_NUM_PARENT {} --TRIAL_NO {}  --VERBOSE {}".format(kwargs["INPUT_TSV"], kwargs["NUM_CLONE_TRIAL_START"], kwargs["NUM_CLONE_TRIAL_END"],  kwargs["RANDOM_PICK"], kwargs["MIN_CLUSTER_SIZE"], kwargs["KMEANS_CLUSTERNO"],   kwargs["CLEMENT_DIR"], kwargs["MODE"], kwargs["TN_CONFIDENTIALITY"], kwargs["MAKEONE_STRICT"], kwargs["MAXIMUM_NUM_PARENT"], kwargs["TRIAL_NO"],   kwargs["VERBOSE"]  ),         file = output_logfile)
 
 
 # membership_answer: ['V1', 'V2', 'FP', 'S0', 'V2', 'S0', 'V2', ....
 # membership_answer_numerical : [0 1 2 3 1 3 1 ...
 
-inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, samplename_dict_CharacterToNum  = datapreparation.main( **kwargs)
+inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, samplename_dict_CharacterToNum, kwargs  = datapreparation.main( **kwargs)
+
+print (kwargs["RANDOM_PICK"])
+
 membership_answer_numerical = np.zeros( kwargs["RANDOM_PICK"], dtype="int")
 membership_answer_numerical_nofp_index = []
 

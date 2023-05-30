@@ -20,6 +20,10 @@ def makedf ( **kwargs ):
     samplename_dict_CharacterToNum = {}
     samplename_dict_NumToCharacter = {}
 
+    if kwargs["NUM_MUTATION"] == -1:
+        kwargs["NUM_MUTATION"] = input_containpos.shape[0]
+        kwargs["RANDOM_PICK"] = input_containpos.shape[0]
+
     np_vaf = np.zeros(( kwargs["NUM_MUTATION"], kwargs["NUM_BLOCK"]), dtype = 'float')
     np_BQ = np.zeros(( kwargs["NUM_MUTATION"], kwargs["NUM_BLOCK"]), dtype = 'float')       # BQ를 담은 것. 초기값으로 20으로 setting해준다
     np_BQ.fill(20)
@@ -91,7 +95,7 @@ def makedf ( **kwargs ):
             if df[row][col]["depth"] == 0:
                 print (df[row][col], row, col)
 
-
+    return kwargs
 
    
 
@@ -123,18 +127,16 @@ def random_pick_fun(**kwargs):
             cnt = cnt + 1
     
 
-    
+    return kwargs
 
 
 
 
 def main (**kwargs):
     global input_containpos, mutation_id, membership, membership_answer, inputdf, df,  np_vaf, np_BQ, samplename_dict_CharacterToNum, samplename_dict_NumToCharacter
-
     
-    makedf ( **kwargs )
+    kwargs = makedf ( **kwargs )
     
-    random_pick_fun(**kwargs)
+    kwargs = random_pick_fun(**kwargs)
 
-            
-    return (inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, samplename_dict_CharacterToNum )
+    return (inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, samplename_dict_CharacterToNum, kwargs )
