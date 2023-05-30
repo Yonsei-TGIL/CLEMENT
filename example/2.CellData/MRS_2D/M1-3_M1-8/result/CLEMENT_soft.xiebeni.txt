@@ -1,0 +1,2 @@
+XieBeni method (min): 1th optimal NUM_CLONE = 3
+

@@ -1,0 +1,5 @@
+NUM_CLONE	3
+NUM_CHILD	3
+runningtime	54
+FPexistence	False
+FPindex	-1

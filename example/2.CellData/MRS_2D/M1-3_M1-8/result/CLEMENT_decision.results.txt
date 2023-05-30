@@ -1,0 +1,9 @@
+NUM_CLONE	3
+NUM_CHILD	3
+runningtime	54
+FPexistence	False
+FPindex	-1
+makeone_index	[0, 1, 2]
+DECISION	hard_1st
+hard_std	0.073
+soft_std	0.103

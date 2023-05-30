@@ -1,0 +1,2 @@
+Gap statistics method (max Gap): 1th optimal NUM_CLONE = 3
+
