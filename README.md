@@ -22,22 +22,25 @@
 
 ### Install from github (requires Python 3.6.* or newer)
 1. https://github.com/Yonsei-TGIL/CLEMENT.git
-2. cd CLEMENT/source
+    cd CLEMENT/source
+or
+2. pip3 install CLEMENTDNA
+or
+3. conda install CLEMENTDNA (to be updated)
 
 ## Version update
 1.0.0 (June 12th, 2023)
 
 ## Input format
 As now of 1.0.0, CLEMENT only supports standardized TSV input. Examples of input file is shown in "example" directory.
-- 1st column:	mutation ID (CHR_POS is recommended)
-- 2nd column: label, if possible. If user don't know the label, just set 0
+- 1st column: mutation ID (CHR_POS is recommended)
+- 2nd column: label  (answer), if possible. If user don't know the label (answer), just set 0
 - 3rd column: **Depth1,Alt1,Depth2,Alt2....,Depth_n,Alt_n**    * should be comma-separated, and no space permitted
 - 4th column: **BQ1,BQ2....,BQ_n**    * should be comma-separated, and no space permitted. If absent, CLEMENT set default BQ as 20.
 
 ## Running
-1. usage1: python3 CLEMENTDNA.py [OPTIONS]
-2. usage2: pip3 install CLEMENTDNA
-3. usage3: conda install CLEMENTDNA (to be updated)
+python3 CLEMENTDNA.py [OPTIONS]
+
 
 **options**
 
@@ -65,14 +68,15 @@ As now of 1.0.0, CLEMENT only supports standardized TSV input. Examples of input
 
 
 **output**
-$\${CLEMNT_DIR}"/result"$
-		--CLEMENT_decision	CLEMENT's best recommendation among hard and soft clustering.
-		--CLEMENT_hard_1st CLEMENT's best decomposition by hard clustering.
-		--CLEMENT_hard.gapstatistics.txt Selecting the optimal K in hard clustering based on gap* stastics.
-		--CLEMENT_soft_1st CLEMENT's best decomposition by soft (fuzzy) clustering.
-		--membership.txt Membership assignment of all variants to each clusters. 
-		--membership_count.txt Count matrix of the membership assignment to each clusters.
-		--mixture.txt Centroid of each clusters
+
+	${CLEMENT_DIR}"/result"
+			--CLEMENT_decision	CLEMENT's best recommendation among hard and soft clustering.
+			--CLEMENT_hard_1st CLEMENT's best decomposition by hard clustering.
+			--CLEMENT_hard.gapstatistics.txt Selecting the optimal K in hard clustering based on gap* stastics.
+			--CLEMENT_soft_1st CLEMENT's best decomposition by soft (fuzzy) clustering.
+			--membership.txt Membership assignment of all variants to each clusters. 
+			--membership_count.txt Count matrix of the membership assignment to each clusters.
+			--mixture.txt Centroid of each clusters
 
 ## Example
 	-python3 CLEMENTDNA.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
