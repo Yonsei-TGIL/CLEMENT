@@ -7,7 +7,7 @@ import setuptools
 
 
 setuptools.setup(
-    name             = 'CLEMENT-DNA',
+    name             = 'CLEMENTDNA',
     version          = '1.0.1',
     description      = 'Genomic decomposition and reconstruction of non-tumor diploid subclones',
     author           = 'Young-soo Chung, M.D.',
@@ -18,9 +18,15 @@ setuptools.setup(
     keywords         = ['CLEMENT', 'genomic decomposition'],
     python_requires  = '>=3.6',
     packages = setuptools.find_packages(),
+    license='GPL v3',
     #packages         = setuptools.find_packages(exclude = ['docs', 'tests*']),
     # package_data     =  {"" : "scripts"},
     classifiers      = [
         'Programming Language :: Python :: 3.6',
-    ]
+    ],
+    entry_points={
+        'console_scripts': [
+            'CLEMENT= source.CLEMENT:main',
+        ]
+    }
 )

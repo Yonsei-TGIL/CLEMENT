@@ -22,17 +22,20 @@
 
 ### Install from github (requires Python 3.6.* or newer)
 1. git clone https://github.com/Yonsei-TGIL/CLEMENT.git   
-    cd CLEMENT/source   
+    cd CLEMENT
+    pip3 install .
 *or*   
-2. pip3 install CLEMENT-DNA  (to be updated) 
+2. pip3 install CLEMENTDNA  (to be updated) 
 *or*   
-3. conda install CLEMENT-DNA (to be updated)
+3. pip3 install git+https://github.com/Yonsei-TGIL/CLEMENT.git   
+*or*   
+4. conda install CLEMENTDNA (to be updated)
 
 ## Version update
-1.0.1 (June 12th, 2023)
+1.0.0 (June 12th, 2023)
 
 ## Input format
-As now of 1.0.1, CLEMENT only supports standardized TSV input. Examples of input file is shown in "example" directory.
+As now of 1.0.0, CLEMENT only supports standardized TSV input. Examples of input file is shown in "example" directory.
 - 1st column: mutation ID (CHR_POS is recommended)
 - 2nd column: label  (answer), if possible. If user don't know the label (answer), just set 0
 - 3rd column: **Depth1,Alt1,Depth2,Alt2....,Depth_n,Alt_n**    * should be comma-separated, and no space permitted
@@ -69,17 +72,17 @@ python3 CLEMENT-DNA.py [OPTIONS]
 
 **output**
 
-	${CLEMENT_DIR}"/result"
-		CLEMENT_decision	CLEMENT's best recommendation among hard and soft clustering.
-		CLEMENT_hard_1st CLEMENT's best decomposition by hard clustering.
-		CLEMENT_hard.gapstatistics.txt Selecting the optimal K in hard clustering based on gap* stastics.
-		CLEMENT_soft_1st CLEMENT's best decomposition by soft (fuzzy) clustering.
-		membership.txt Membership assignment of all variants to each clusters. 
-		membership_count.txt Count matrix of the membership assignment to each clusters.
-		mixture.txt Centroid of each clusters
+${CLEMENT_DIR}"/result"
+- **CLEMENT_decision**	CLEMENT's best recommendation among hard and soft clustering.
+- **CLEMENT_hard_1st** CLEMENT's best decomposition by hard clustering.
+- **CLEMENT_hard.gapstatistics.txt** Selecting the optimal K in hard clustering based on gap* stastics.
+- **CLEMENT_soft_1st** CLEMENT's best decomposition by soft (fuzzy) clustering.
+- **membership.txt** Membership assignment of all variants to each clusters. 
+- **membership_count.txt** Count matrix of the membership assignment to each clusters.
+- **mixture.txt** Centroid of each clusters
 
 ## Example
-	python3 CLEMENT-DNA.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
+	python3 CLEMENT.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
 
 ## Contact
 	goldpm1@yuhs.ac
