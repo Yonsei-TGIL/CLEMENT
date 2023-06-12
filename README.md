@@ -21,11 +21,11 @@
 - palettable 3.3.0
 
 ### Install from github (requires Python 3.6.* or newer)
-1. https://github.com/Yonsei-TGIL/CLEMENT.git
-    cd CLEMENT/source
-or
-2. pip3 install CLEMENTDNA
-or
+1. https://github.com/Yonsei-TGIL/CLEMENT.git   
+    cd CLEMENT/source   
+*or*   
+2. pip3 install CLEMENTDNA   
+*or*   
 3. conda install CLEMENTDNA (to be updated)
 
 ## Version update
@@ -70,16 +70,16 @@ python3 CLEMENTDNA.py [OPTIONS]
 **output**
 
 	${CLEMENT_DIR}"/result"
-			--CLEMENT_decision	CLEMENT's best recommendation among hard and soft clustering.
-			--CLEMENT_hard_1st CLEMENT's best decomposition by hard clustering.
-			--CLEMENT_hard.gapstatistics.txt Selecting the optimal K in hard clustering based on gap* stastics.
-			--CLEMENT_soft_1st CLEMENT's best decomposition by soft (fuzzy) clustering.
-			--membership.txt Membership assignment of all variants to each clusters. 
-			--membership_count.txt Count matrix of the membership assignment to each clusters.
-			--mixture.txt Centroid of each clusters
+		CLEMENT_decision	CLEMENT's best recommendation among hard and soft clustering.
+		CLEMENT_hard_1st CLEMENT's best decomposition by hard clustering.
+		CLEMENT_hard.gapstatistics.txt Selecting the optimal K in hard clustering based on gap* stastics.
+		CLEMENT_soft_1st CLEMENT's best decomposition by soft (fuzzy) clustering.
+		membership.txt Membership assignment of all variants to each clusters. 
+		membership_count.txt Count matrix of the membership assignment to each clusters.
+		mixture.txt Centroid of each clusters
 
 ## Example
-	-python3 CLEMENTDNA.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
+	python3 CLEMENTDNA.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
 
 ## Contact
 	goldpm1@yuhs.ac
