@@ -24,7 +24,7 @@ def drawfigure_1d(membership, mixture, membership_p_normalize, output_suptitle, 
     colorlist = [i for i in tabl]
 
     if includeoutlier == True:
-        colorlist[ fp_index ] = Gr_10[8]        # Outlier는 까만색으로 지정해준다
+        colorlist[ fp_index ] = Gr_10[8] 
     
     plt.figure(figsize=(6, 6))
     plt.xlabel("Mixture ( = VAF x 2)", fontdict = {"fontsize" : 14})
@@ -42,7 +42,6 @@ def drawfigure_1d(membership, mixture, membership_p_normalize, output_suptitle, 
         
         # sample_index = 0	sample_value = 0	samplename_dict = {0: 0, 1: 1, 2: 2, 3: 3}
         
-        # Outlier는 넘어가자
         if includeoutlier == True:
             if sample_index == fp_index: 
                 break
@@ -64,7 +63,7 @@ def drawfigure_1d(membership, mixture, membership_p_normalize, output_suptitle, 
     plt.show()
 
 
-# Block 1, 2:  data point를 2차원 평면상에 그려보기
+
 def drawfigure_2d(membership, mixture, membership_p_normalize,  output_suptitle, output_filename, np_vaf, samplename_dict, includeoutlier , fp_index, makeone_index, dimensionreduction="None"):
     import matplotlib
 
@@ -80,13 +79,13 @@ def drawfigure_2d(membership, mixture, membership_p_normalize,  output_suptitle,
     
     fig, ax = matplotlib.pyplot.subplots (figsize = (6, 6))
 
-    if mixture.shape[0] > 2:  # 3차원 이상이면
+    if mixture.shape[0] > 2:  # If more than 3 samples
         dimensionreduction = "SVD"
 
     if dimensionreduction == "SVD":
         print("SVD → 2D")
         tsvd = TruncatedSVD(n_components=2)
-        tsvd.fit(np.concatenate([np_vaf, mixture]))               # mixture 도 square로 찍어주려면 차원축소 변환을 잘 해줘야 한다
+        tsvd.fit(np.concatenate([np_vaf, mixture])) 
         np_vaf = tsvd.transform(np.concatenate([np_vaf, mixture]))[:-NUM_BLOCK]
         mixture = tsvd.transform(np.concatenate([np_vaf, mixture]))[-NUM_BLOCK:]
         ax.axis([np.min(np_vaf[:, 0]) * 2.1,  np.max(np_vaf[:, 0]) * 2.1,  np.min(np_vaf[:, 1]) * 2.1,  np.max(np_vaf[:, 1]) * 2.1])
@@ -95,7 +94,7 @@ def drawfigure_2d(membership, mixture, membership_p_normalize,  output_suptitle,
     elif dimensionreduction == "PCA":
         print("PCA → 2D")
         pca = PCA(n_components=2)
-        pca.fit(np.concatenate([np_vaf, mixture]))               # mixture 도 square로 찍어주려면 차원축소 변환을 잘 해줘야 한다
+        pca.fit(np.concatenate([np_vaf, mixture])) 
         np_vaf = pca.transform(np.concatenate([np_vaf, mixture]))[:-NUM_BLOCK]
         mixture = pca.transform(np.concatenate([np_vaf, mixture]))[-NUM_BLOCK:]
         ax.axis([np.min(np_vaf[:, 0]) * 2.1,  np.max(np_vaf[:, 0]) *  2.1,  np.min(np_vaf[:, 1]) * 2.1,  np.max(np_vaf[:, 1]) * 2.1])
@@ -113,18 +112,18 @@ def drawfigure_2d(membership, mixture, membership_p_normalize,  output_suptitle,
 
 
     if includeoutlier == True:
-        outlier_color_num = samplename_dict[ fp_index ]       # fp_index 색깔번호 (Outlier 번호)
+        outlier_color_num = samplename_dict[ fp_index ]
         colorlist [ outlier_color_num ] = Gr_10[8]
 
 
-    # 각 점을 일일이 색칠하기
+    
     for j in range (0, NUM_CLONE):
         for k in range (NUM_MUTATION):
             if membership_p_normalize[k,j] > 0.8:
                 ax.scatter(np_vaf[k, 0] * 2, np_vaf[k, 1] * 2, alpha=1, color=[colorlist[samplename_dict[j]]], s = 140)
             elif membership_p_normalize[k,j] > 0.1:
                 ax.scatter(np_vaf[k, 0] * 2, np_vaf[k, 1] * 2, alpha=membership_p_normalize[k,j], color=[colorlist[samplename_dict[j]]], s = 170)
-            else:        # 10%도 기여하지 못한다면 칠하지 말고 넘어가자
+            else:   
                 continue
 
     for sample_index, sample_key in enumerate(samplename_dict):
@@ -132,10 +131,6 @@ def drawfigure_2d(membership, mixture, membership_p_normalize,  output_suptitle,
         
         if sample_key not in set(membership):
             continue
-        # # Outlier는 까만 사각형 칠하지도 말자
-        # if includeoutlier == True:
-        #     if sample_index == len(list(samplename_dict)) - 1:
-        #         continue
 
         # mixture 정보를 바탕으로 (얘는 앞부터 순차적으로 해야 하니까 sample_index가 맞다)
         x_mean = round ( mixture[0][sample_index], 2)         # 얘도 2차원으로 차원축소했으니 걱정없다

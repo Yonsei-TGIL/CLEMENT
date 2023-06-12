@@ -10,11 +10,11 @@ kwargs = {}
 parser = argparse.ArgumentParser(description='The below is usage direction.')
 parser.add_argument('--INPUT_TSV', type=str, default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8/M1-3_M1-8_input.txt",  help="Path where TSV format file locate. (Important : DIRECTORY (X), File path (O) )")
 parser.add_argument('--CLEMENT_DIR', default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8",   help="Directory where input and output of CLEMENT deposits (Important : DIRECTORY (O), File path (X) )")
-parser.add_argument('--MODE', type=str, choices=["Hard", "Soft", "Both"], default="Both", help="Selection of clustering method. Default : Both")
+parser.add_argument('--MODE', type=str, choices=["Hard", "Both"], default="Both", help="Selection of clustering method. Default : Both")
 parser.add_argument('--RANDOM_PICK', type=int, default=-1,  help="The number of mutations to alleviate the computational load. Default : -1 (load the whole data)")
 parser.add_argument('--KMEANS_CLUSTERNO',  type=int, default=8,  choices=range(5, 20), help="Number of initial K-means cluster. Recommendation : 5~8 for one-sample, 8-15 for larger-sample. Default : 8")
 parser.add_argument('--NUM_CLONE_TRIAL_START', type=int, default=3,  help="Minimum number of expected cluster_hards (initation of K). Default : 3")
-parser.add_argument('--NUM_CLONE_TRIAL_END', type=int, default=3, choices=range(1, 11), help="Maximum number of expected cluster_hards (termination of K). Default : 5")
+parser.add_argument('--NUM_CLONE_TRIAL_END', type=int, default=5, choices=range(1, 11), help="Maximum number of expected cluster_hards (termination of K). Default : 5")
 parser.add_argument('--TRIAL_NO', default=5, type=int, choices=range(1, 21),  help="The number of trials in each candidate clone number. DO NOT recommend over 20. Default : 5")
 parser.add_argument('--MAXIMUM_NUM_PARENT',  default=1, type=int,  help="The maximum number of parents in the given samples. Recommendation : 0-2. Default : 1")
 parser.add_argument('--MIN_CLUSTER_SIZE', type=int, default=9, help="The minimum number of membersip in single cluster. Default : 9")
@@ -98,7 +98,7 @@ START_TIME = datetime.datetime.now()
 
 
 np_vaf = miscellaneous.np_vaf_extract(df)
-mixture_kmeans, kwargs["KMEANS_CLUSTERNO"] = miscellaneous.initial_kmeans (np_vaf, kwargs["KMEANS_CLUSTERNO"], kwargs["CLEMENT_DIR"] + "/trial/0.inqitial_kmeans.pdf")   # Kmeans clustering 돌렸는데 1 넘는 centroid는 제거하고 다시 return받는다
+mixture_kmeans, kwargs["KMEANS_CLUSTERNO"] = miscellaneous.initial_kmeans (np_vaf, kwargs["KMEANS_CLUSTERNO"], kwargs["CLEMENT_DIR"] + "/trial/0.inqitial_kmeans.pdf")  
 
 cluster_hard = Bunch.Bunch2(**kwargs)
 cluster_soft = Bunch.Bunch2(**kwargs)
@@ -123,17 +123,17 @@ if kwargs["MODE"] in ["Soft", "Both"]:
         if cluster_hard.likelihood_record[ NUM_CLONE ] !=  float("-inf"):
             print("\n\n\tSequential Soft clustering (TRIAL_NO = {}, STEP_NO = {})".format ( cluster_hard.trialindex_record[ NUM_CLONE ], cluster_hard.stepindex_record [ NUM_CLONE ] ))
             step_soft = Bunch.Bunch1( kwargs["NUM_MUTATION"] , kwargs["NUM_BLOCK"], NUM_CLONE, cluster_hard.stepindex_record [ NUM_CLONE ] + kwargs["STEP_NO"])
-            step_soft.copy (cluster_hard, 0, NUM_CLONE)  # 0번 step에 cluster_hard를 복사한다
+            step_soft.copy (cluster_hard, 0, NUM_CLONE) 
 
-            for step_index in range(1, kwargs["STEP_NO"]):   # 0번은 채웠으니 1번부터 시작
+            for step_index in range(1, kwargs["STEP_NO"]): 
                 kwargs["STEP"], kwargs["TRIAL"] = step_index, cluster_hard.trialindex_record[ NUM_CLONE ]
                 kwargs["STEP_TOTAL"] = step_index + cluster_hard.stepindex_record [ NUM_CLONE ] - 1
                 
                 print("\t\t#{}번째 step ( = TOTAL {}번째 step)".format(kwargs["STEP"], kwargs["STEP_TOTAL"]) )
 
-                step_soft = Estep.main(df, np_vaf, np_BQ, step_soft, **kwargs)                   # 주어진 mixture 내에서 새 membership 정하기
+                step_soft = Estep.main(df, np_vaf, np_BQ, step_soft, **kwargs)               # E step
                 print ( "\t\t\tE step 이후 : {}\tmakeone_index : {}".format( np.unique(step_soft.membership  , return_counts=True), step_soft.makeone_index ) )
-                step_soft = Mstep.main(df, np_vaf, np_BQ, step_soft, "Soft", **kwargs)     # 새 memberhsip에서 새 mixture구하기
+                step_soft = Mstep.main(df, np_vaf, np_BQ, step_soft, "Soft", **kwargs)     # M step
                 print("\t\t\tM step 이후 : fp_index {}\tmakeone_index {}\tlikelihood : {}".format( step_soft.fp_index, step_soft.makeone_index, round (step_soft.likelihood, 1), step_soft.mixture ))
 
 
@@ -149,26 +149,22 @@ if kwargs["MODE"] in ["Soft", "Both"]:
                     break
 
 
-            step_soft.max_step_index =  step_soft.find_max_likelihood(1, step_soft.stepindex - 2 )   # 합쳐서 무조건 1이 되게 한다면 현실과 안 맞을수도 있음...
+            step_soft.max_step_index =  step_soft.find_max_likelihood(1, step_soft.stepindex - 2 )  
             i = step_soft.max_step_index
 
-            # soft clustering에서 아예 답을 못 찾을 경우
+            # If unavaliable to find the possiible answer in soft clustering
             if i == -1:
                 print ("\t\t\tNot available this clone")
             elif  (step_soft.likelihood_record [i]  <= -9999999) :
                 print ("\t\t\tNot available this clone")
 
-            else:  # 대부분의경우:  Soft clustering에서 답을 찾은 경우
+            else:  # (Most of the case) Available 
                 os.system ("cp " + kwargs["CLEMENT_DIR"] + "/trial/clone" + str (kwargs["NUM_CLONE"]) + "." + str( kwargs["TRIAL"] ) + "-"  + str(step_soft.max_step_index  + cluster_hard.stepindex_record [ NUM_CLONE ] - 1) + "\(soft\).pdf" + "  " + kwargs["CLEMENT_DIR"] + "/candidate/clone" + str (kwargs["NUM_CLONE"])  + ".\(soft\).pdf"  )
                 cluster_soft.acc ( step_soft.mixture_record [i], step_soft.membership_record [i], step_soft.likelihood_record [i], step_soft.membership_p_record [i], step_soft.membership_p_normalize_record [i], step_soft.stepindex_record[i], cluster_hard.trialindex, step_soft.max_step_index_record[i], step_soft.makeone_index_record[i], step_soft.fp_index_record[i], step_soft.includefp_record[i], step_soft.fp_involuntary_record[i], step_soft.fp_member_index_record[i]   ,**kwargs )
 
 
-        else:   # hard clustering에서 아예 답을 못 찾은 경우
+        else:   # If unavaliable to find the possiible answer in hard clustering
             print ("Cant' find possible combination even in Hard clustering.")
-
-
-# subprocess.run (["cp -r " + kwargs["CLEMENT_DIR"] + "/candidate  " + kwargs["CLEMENT_DIR"]  ], shell = True)
-# subprocess.run (["cp -r " + kwargs["CLEMENT_DIR"] + "/trial  " + kwargs["CLEMENT_DIR"]  ], shell = True)
 
 
 
@@ -177,7 +173,7 @@ if kwargs["MODE"] in ["Soft", "Both"]:
 
 print ("\n\n\n\n==================================== STEP #4.  OPTIMAL K DETERMINATION  =======================================")
 
-NUM_CLONE_hard , NUM_CLONE_soft = [], []    # Hard clustering에서의 order, Soft clustering에서의 order
+NUM_CLONE_hard , NUM_CLONE_soft = [], []    
 
 print ("\n\n★★★ Gap Statistics method (Hard clustering)\n")
 
@@ -248,8 +244,8 @@ else:
                 if ( len (moved_col_list) == 1 )  & (  kwargs["NUM_BLOCK"] == 1 ) :  # Incalculable std in this condition
                     not_moved_col_list = [i for i in list(range ( NUM_CLONE_hard[i] )) if i not in moved_col_list]
                     print ( "moved_col_list = {}\nnot_moved_col_list = {}\ncluster_hard.mixture_record = {}".format (moved_col_list, not_moved_col_list, cluster_hard.mixture_record [ NUM_CLONE_hard[i] ] ))
-                    not_moved_col_mean  =  np.mean ( cluster_hard.mixture_record [ NUM_CLONE_hard[i] ]  [0] [ not_moved_col_list ] )    # 1D이니까 0이라고 지정해도 됨
-                    moved_col_mean = np.mean ( cluster_hard.mixture_record [ NUM_CLONE_hard[i] ] [ 0 , moved_col_list ]  )   # 1D이니까 0이라고 지정해도 됨
+                    not_moved_col_mean  =  np.mean ( cluster_hard.mixture_record [ NUM_CLONE_hard[i] ]  [0] [ not_moved_col_list ] ) 
+                    moved_col_mean = np.mean ( cluster_hard.mixture_record [ NUM_CLONE_hard[i] ] [ 0 , moved_col_list ]  ) 
                     print ( "not_moved_col_mean = {}\nmoved_col_mean = {}".format (not_moved_col_mean, moved_col_mean) )
 
                     if abs (moved_col_mean - not_moved_col_mean) > 0.1:  
@@ -334,10 +330,10 @@ if kwargs["MODE"] in ["Soft", "Both"]:
     
     print ("\n\n\n======================================= STEP #6. DECISION:  HARD VS SOFT  =======================================")
     if soft_std != 0 :
-        print ( "DECISION : {}\t\thard_std : {}\tsoft_std : {}\tratio : {}\tsoft 선택기준 : < {}".format( DECISION, round(hard_std, 3), round(soft_std, 3), round ( round(soft_std, 3) / round(hard_std, 3), 2) , round (kwargs["DECISION_STANDARD"], 2) ))
+        print ( "DECISION : {}\t\thard_std : {}\tsoft_std : {}\tratio : {}\tcriteria : < {}".format( DECISION, round(hard_std, 3), round(soft_std, 3), round ( round(soft_std, 3) / round(hard_std, 3), 2) , round (kwargs["DECISION_STANDARD"], 2) ))
     else:
         try:
-            print ( "DECISION : {}\t\tmoved_col_mean : {}\tnot_moved_col_mean : {}\tsoft 선택기준 : > 0.1".format( DECISION, moved_col_mean, not_moved_col_mean ) )
+            print ( "DECISION : {}\t\tmoved_col_mean : {}\tnot_moved_col_mean : {}\tcriteria : > 0.1".format( DECISION, moved_col_mean, not_moved_col_mean ) )
         except:
             print ( "DECISION : {}\t\tmoved_col_list : {}".format( DECISION, moved_col_list) )
     

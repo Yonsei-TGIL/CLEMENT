@@ -2,8 +2,7 @@ import numpy as np
 import copy
 import EMhard
 
-# step : 각 step에서의 값을 저장
-# trial : 각 trial에서의 best 값을 저장
+
 class Bunch1:        # step_hard, step_soft, trial_hard, trial_soft
     def __init__(self, NUM_MUTATION, NUM_BLOCK, NUM_CLONE, K):
         self.mixture = np.zeros ( (NUM_BLOCK, NUM_CLONE), dtype = "float")
@@ -61,8 +60,8 @@ class Bunch1:        # step_hard, step_soft, trial_hard, trial_soft
         
         max, max_index = -9999999, -1
         for i in range (start, end + 1):
-            if self.fp_involuntary_record[i] == False:    # fp_voluntary에서만 뽑자
-                if self.makeone_prenormalization_record[i] == True:  # makeone을 했을 때 0.9 ~ 1.1안에드는 것을 뽑자
+            if self.fp_involuntary_record[i] == False:   
+                if self.makeone_prenormalization_record[i] == True:
                     if self.likelihood_record [i] > max:
                         max = self.likelihood_record [i]
                         max_index = i
@@ -104,7 +103,6 @@ class Bunch1:        # step_hard, step_soft, trial_hard, trial_soft
 
 
 
-# self :  각 NUM_CLONE에서의 best 값을 저장  (record가 중요)  
 # cluster_hard, cluster_soft
 class Bunch2:
     def __init__(self, **kwargs):
@@ -145,7 +143,6 @@ class Bunch2:
         self.fp_member_index_record  [kwargs["NUM_CLONE_NOMINAL"]] = copy.deepcopy  ( fp_member_index )
 
     def find_max_likelihood (self, start, end):
-
         i = np.argmax(self.likelihood_record [ start : end + 1]) + start
         return i
 

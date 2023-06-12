@@ -18,9 +18,7 @@ def drawfigure_1d(membership1, sample_dict_rev, membership2, mixture2, output_fi
     font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
     for font in font_dirs:
         matplotlib.font_manager.fontManager.addfont(font)
-    #print (matplotlib.font_manager.FontProperties(fname = font).get_name())
-
-    #matplotlib.pyplot.style.use("seaborn-whitegrid")
+    
     matplotlib.rcParams["font.family"] = 'arial'
 
 
@@ -34,11 +32,11 @@ def drawfigure_1d(membership1, sample_dict_rev, membership2, mixture2, output_fi
 
     x = np.linspace(0, 2, 200)
 
-    for k in sorted(list(set(membership1))):        # 각 clone number를 따로 돈다
-        np_vaf_new_index, np_vaf_new = extract.npvaf(np_vaf, membership1, k)           # membership1  == clone_num 인 것만 추려옴
+    for k in sorted(list(set(membership1))): 
+        np_vaf_new_index, np_vaf_new = extract.npvaf(np_vaf, membership1, k) 
         kde_np_vaf_new = kde.gaussian_kde(np_vaf_new[:, 0] * 2)
         
-        weight = len(np_vaf_new) / len(np_vaf)  # weight를 줘서 total density 적분값이 1이 되도록 하자
+        weight = len(np_vaf_new) / len(np_vaf) 
         y = kde_np_vaf_new(x) * weight
         if max_y < np.max(y):
             max_y = np.max(y)
@@ -70,7 +68,7 @@ def drawfigure_1d(membership1, sample_dict_rev, membership2, mixture2, output_fi
     matplotlib.pyplot.savefig(output_filename)
 
 
-# Block 1, 2:  data point를 2차원 평면상에 그려보기
+
 def drawfigure_2d(membership_left, mixture_left, membership_right, mixture_right, score_df, output_filename, fig1title, fig2title, np_vaf, includeoutlier,  makeone_index, dimensionreduction="None"):
     vivid_10 = palettable.cartocolors.qualitative.Vivid_10.mpl_colors
     bdo = palettable.lightbartlein.diverging.BlueDarkOrange18_18.mpl_colors
@@ -89,10 +87,9 @@ def drawfigure_2d(membership_left, mixture_left, membership_right, mixture_right
     matplotlib.rcParams["font.family"] = 'arial'
 
     if (includeoutlier == True ) &  ("FP" in list(score_df["answer"])):
-        #colorlist[ np.where(score_df["predicted"] == np.max(membership_right))[0][0] ] = Gr_10[16]        # Outlier는 까만색으로 지정해준다
-        colorlist[ np.where(score_df["answer"] == "FP")[0][0] ] = Gr_10[16]        # Outlier는 까만색으로 지정해준다
+        colorlist[ np.where(score_df["answer"] == "FP")[0][0] ] = Gr_10[16]        # Draw FP in black
 
-    if mixture_right.shape[0] > 2:  # 3차원 이상이면
+    if mixture_right.shape[0] > 2:  # more than 3 samples
         dimensionreduction = "SVD"
 
     maxmaxmax_NUM_CLONE = np.max(membership_right) + 1
@@ -110,9 +107,7 @@ def drawfigure_2d(membership_left, mixture_left, membership_right, mixture_right
         ax[0].set_ylabel("SVD2")
         ax[1].set_ylabel("SVD2")
         ax[0].set_title("{}".format(fig1title) ,  fontdict = {"fontsize" : 20} )
-        ax[0].set_title("\n\nNUM_CLONE = {}".format( mixture_left.shape[1]) , loc = 'right', fontdict = {"fontsize" : 12} )
         ax[1].set_title("{}".format(fig2title) , fontdict = {"fontsize" : 20} )
-        ax[1].set_title("\n\nNUM_CLONE = {}".format( mixture_right.shape[1]) , loc = 'right', fontdict = {"fontsize" : 12} )
         
     elif dimensionreduction == "PCA":
         print("PCA → 2D")
@@ -132,11 +127,7 @@ def drawfigure_2d(membership_left, mixture_left, membership_right, mixture_right
         
     else:
         ax[0].set_title("{}".format(fig1title) ,  fontdict = {"fontsize" : 20} )
-        ax[0].set_title("\n\nNUM_CLONE = {}".format( mixture_left.shape[1]) , loc = 'right', fontdict = {"fontsize" : 12} )
         ax[1].set_title("{}".format(fig2title) , fontdict = {"fontsize" : 20} )
-        ax[1].set_title("\n\nNUM_CLONE = {}".format( mixture_right.shape[1]) , loc = 'right', fontdict = {"fontsize" : 12} )
-        #matplotlib.pyplot.title(r'\fontsize{30pt}{3em}\selectfont{}{Mean WRFv3.5 LHF\r}{\fontsize{18pt}{3em}\selectfont{}(September 16 - October 30, 2012)}')
-
         ax[0].axis([0,  np.max(np_vaf[:, :]) * 2.1,   0,  np.max(np_vaf[:, :]) * 2.1])
         ax[1].axis([0,  np.max(np_vaf[:, :]) * 2.1,   0,  np.max(np_vaf[:, :]) * 2.1])
         ax[0].set_xlabel("Mixture ( = VAF x 2) of Sample 1")
@@ -144,52 +135,46 @@ def drawfigure_2d(membership_left, mixture_left, membership_right, mixture_right
         ax[0].set_ylabel("Mixture ( = VAF x 2) of Sample 2")
         ax[1].set_ylabel("Mixture ( = VAF x 2) of Sample 2")
 
-    # ax[0].scatter(np_vaf[:, 0] * 2, np_vaf[:, 1] * 2, alpha=0.6,   color=[colorlist[k] for k in membership_left])
-    # ax[1].scatter(np_vaf[:, 0] * 2, np_vaf[:, 1] * 2, alpha=0.6,   color=[colorlist[k] for k in membership_right])
+    
 
-
-    # Scatter plot을 각각의 cluster에 대해서 그리기
+    # Scatter plot
     for k in range(len(membership_left)):
         try:
-            i =  np.where(score_df["answer"] == membership_left[k])[0][0]    # 가장 먼저 V2가 나오는 index
+            i =  np.where(score_df["answer"] == membership_left[k])[0][0] 
             ax[0].scatter(np_vaf[k, 0] * 2, np_vaf[k, 1] * 2, alpha=1, color=[colorlist[ i ]])
         except:
-            print ("무슨 문제가 있는거지?\n", membership_left[k], score_df)
+            print ("What happened in visualizationpair.py?\n", membership_left[k], score_df)
     for k in range(len(membership_right)):
-        i = np.where(score_df["predicted"] == membership_right[k])[0][0]    # 가장 먼저 3가 나오는 index
+        i = np.where(score_df["predicted"] == membership_right[k])[0][0] 
         ax[1].scatter(np_vaf[k, 0] * 2, np_vaf[k, 1] * 2, alpha=1, color=[colorlist[ i ]])
 
 
 
     if (dimensionreduction != "SVD") & ( dimensionreduction != "PCA" ):
-        #  왼쪽 그림 :  정답을 그리기 (square )
+        #  Left figure : answer
         for samplename_left_character in list(np.unique(membership_left)):
-            # membership & np_vaf 정보를 바탕으로
             x_mean = round(np.mean(np_vaf[[x for x in range( len(membership_left)) if membership_left[x] == samplename_left_character]][:, 0] * 2), 3)
             y_mean = round(np.mean(np_vaf[[x for x in range( len(membership_left)) if membership_left[x] == samplename_left_character]][:, 1] * 2), 3)
 
             ax[0].text(x_mean, y_mean, "{0}".format( [x_mean, y_mean]), verticalalignment='top', fontdict = {"fontsize": 16, "fontweight" : "bold"})
-            i = np.where(score_df["answer"] == samplename_left_character)[0][0]    # 가장 먼저 V2가 나오는 index
+            i = np.where(score_df["answer"] == samplename_left_character)[0][0] 
             ax[0].scatter(x_mean, y_mean, marker='s', color=colorlist[ i ], edgecolor='black', s=100,
                         label=str(samplename_left_character) + " : " + str(list(membership_left).count(samplename_left_character)))
             ax[0].legend()
 
 
-        #  오른쪽 그림 : 내가 구한 EM 을 그리기 (square)
-        ##xx = mixture_right.shape[1] - 1 if includeoutlier == "Yes" else mixture_right.shape[1] 
+        # Right figure : my dataset
         xx = mixture_right.shape[1] 
 
-        for sample_index in range(xx):   # square 그려주지 말자
-            # mixture 정보를 바탕으로
+        for sample_index in range(xx): 
             x_mean = mixture_right[0][sample_index]
             y_mean = mixture_right[1][sample_index]
             ax[1].text(x_mean, y_mean, "{0}".format([x_mean, y_mean]), verticalalignment='top', fontdict = {"fontsize": 16, "fontweight" : "bold"})
             try:
-                i = np.where(score_df["predicted"] == sample_index)[0][0]    # 가장 먼저 1이 나오는 index
+                i = np.where(score_df["predicted"] == sample_index)[0][0] 
             except:
                 continue
-            # ax[1].scatter(x_mean, y_mean, marker='s', color=colorlist[ i ], edgecolor='black', s=100,
-            #               label="cluster" + str(sample_index) + " : " + str(list(membership_right).count(sample_index)))
+            
 
             if (makeone_index != []) & (makeone_index != None):
                 if sample_index in makeone_index:

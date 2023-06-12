@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import itertools
 
-def comb2 (t):     # 2차원 ndarray를 받아서 (mixture) 2개씩 뽑아서 더해주기 
+def comb2 (t):     # Input : 2D ndarray (mixture) -> Combinatory sum of two columns
     comb = []
     combi = list(itertools.combinations(range(t.shape[1]), 2))
     for a, b in combi:

@@ -1,0 +1,28 @@
+{% set version = "1.0.0" %}
+
+package:
+  name: CLEMENTDNA
+  version:  {{ version }}
+about:
+  home: https://github.com/Yonsei-TGIL/CLEMENT
+  license: Yonsei University, TGIL
+  summary: 'Genomic decomposition and reconstruction of non-tumor diploid subclones'
+  description: |
+    CLEMENT (CLonal decomposition via Expectation-Maximization algorithm Established in Non-Tumor setting
+source:
+  fn: CLEMENTDNA-0.0.1.tar.gz
+  url: https://test.pypi.org/packages/source/s/sampleproject-YOUR-USERNAME/CLEMENTDNA-0.0.1.tar.gz
+  md5: "39180d64b5021c5399a2568fe2103cd2"
+
+requirements:
+  host:
+    - pip >=19
+  run:
+    - python >=3.6
+    - matplotlib >=3.5.2
+    - seaborn >=0.11.2
+    - numpy >=1.21.5
+    - pandas >=1.3.4
+    - scikit-learn >=1.0.2
+    - scipy >=1.7.3
+    - palettable >=3.3.0

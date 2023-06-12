@@ -7,14 +7,14 @@ import pandas as pd
 from scipy.stats import kde
 from sklearn.decomposition import TruncatedSVD, PCA
 
-# Block 1, 2:  data point를 2차원 평면상에 그려보기
+
 def drawfigure_1d_hard(bunch, np_vaf, output_filename, **kwargs):
     if kwargs["OPTION"] in ["Hard", "hard"]:
         matplotlib.pyplot.style.use("seaborn-whitegrid")
     elif kwargs["OPTION"] in ["Soft", "soft"]:
         matplotlib.pyplot.style.use("seaborn-darkgrid")
 
-    if (bunch.makeone_index == []) | (bunch.makeone_index == None):       # 합쳐서 1 만드는 게 없을 경우 우울하게 만들어주자
+    if (bunch.makeone_index == []) | (bunch.makeone_index == None):  
         matplotlib.pyplot.style.use("Solarize_Light2")
     if (bunch.makeone_prenormalization == False):
         matplotlib.pyplot.style.use("Solarize_Light2")
@@ -37,12 +37,12 @@ def drawfigure_1d_hard(bunch, np_vaf, output_filename, **kwargs):
 
     x = np.linspace(0, 2, 200)
 
-    for k in sorted(list(set(bunch.membership))):        # 각 clone number를 따로 돈다
-        np_vaf_new_index, np_vaf_new = extract.npvaf(np_vaf, bunch.membership, k)           # membership1  == clone_num 인 것만 추려옴
+    for k in sorted(list(set(bunch.membership))):     
+        np_vaf_new_index, np_vaf_new = extract.npvaf(np_vaf, bunch.membership, k)           # extract membership1  == clone_num
 
-        try:             # 0만 가득 차 있는 경우 kde를 못 그린다
+        try:   
             kde_np_vaf_new = kde.gaussian_kde(np_vaf_new[:, 0] * 2)
-            weight = len(np_vaf_new) / kwargs["NUM_MUTATION"]  # weight를 줘서 total density 적분값이 1이 되도록 하자
+            weight = len(np_vaf_new) / kwargs["NUM_MUTATION"]  
             y = kde_np_vaf_new(x) * weight
 
             if max_y < np.max(y):
@@ -58,11 +58,6 @@ def drawfigure_1d_hard(bunch, np_vaf, output_filename, **kwargs):
             continue
 
     matplotlib.pyplot.suptitle("clone{}.{}-{},  Total prob = {}".format(kwargs["NUM_CLONE"], kwargs["TRIAL"], kwargs["STEP"], round(bunch.likelihood)), fontsize=20)
-    # if kwargs["OPTION"] in ["Hard", "hard", "fp", "fp"]:
-    #     matplotlib.pyplot.suptitle("Step {},  Total prob = {}".format(kwargs["STEP"], round(bunch.likelihood)), fontsize=20)
-    # elif kwargs["OPTION"] in ["Soft", "soft"]:
-    #     matplotlib.pyplot.suptitle("Step {},  Total prob = {}".format(kwargs["STEP"], round(bunch.likelihood)), fontsize=20)
-
     matplotlib.pyplot.title("Sum_child = {}".format(list(np.round(np.sum(bunch.mixture[:, bunch.makeone_index], axis=1), 3))), fontsize=12)
 
     matplotlib.pyplot.axis([0,  np.max(np_vaf[:, :]) * 2.1,  0,  max_y * 1.3])
@@ -87,7 +82,7 @@ def drawfigure_1d_soft(bunch, np_vaf, output_filename, **kwargs):
     elif kwargs["OPTION"] in ["Soft", "soft"]:
         matplotlib.pyplot.style.use("seaborn-darkgrid")
 
-    if (bunch.makeone_index == []) | (bunch.makeone_index == None):       # 합쳐서 1 만드는 게 없을 경우 우울하게 만들어주자
+    if (bunch.makeone_index == []) | (bunch.makeone_index == None): 
         matplotlib.pyplot.style.use("Solarize_Light2")
     if (bunch.makeone_prenormalization == False):
         matplotlib.pyplot.style.use("Solarize_Light2")
@@ -111,11 +106,6 @@ def drawfigure_1d_soft(bunch, np_vaf, output_filename, **kwargs):
     matplotlib.pyplot.ylabel("count (weighted)")
 
     matplotlib.pyplot.suptitle("clone{}.{}-{},  Total prob = {}".format(kwargs["NUM_CLONE"], kwargs["TRIAL"], kwargs["STEP_TOTAL"], round(bunch.likelihood)), fontsize=20)
-    # if kwargs["OPTION"] in ["Hard", "hard", "fp", "fp"]:
-    #     matplotlib.pyplot.suptitle("Step {},  Total prob = {}".format(kwargs["STEP"], round(bunch.likelihood)), fontsize=20)
-    # elif kwargs["OPTION"] in ["Soft", "soft"]:
-    #     matplotlib.pyplot.suptitle("Step {},  Total prob = {}".format(kwargs["STEP"], round(bunch.likelihood)), fontsize=20)
-
     matplotlib.pyplot.title("Sum_child = {}".format(list(np.round(np.sum(bunch.mixture[:, bunch.makeone_index], axis=1), 3))), fontsize=12)
 
     for k in sorted(list(set(bunch.membership))):
@@ -145,7 +135,7 @@ def drawfigure_2d(bunch, np_vaf, output_filename, **kwargs):
     elif kwargs["OPTION"] in ["Soft", "soft"]:
         matplotlib.pyplot.style.use("seaborn-darkgrid")
 
-    if (bunch.makeone_index == []) | (bunch.makeone_index == None):       # 합쳐서 1 만드는 게 없을 경우 우울하게 만들어주자
+    if (bunch.makeone_index == []) | (bunch.makeone_index == None):  
         matplotlib.pyplot.style.use("Solarize_Light2")
     if (bunch.makeone_prenormalization == False):
         matplotlib.pyplot.style.use("Solarize_Light2")
@@ -170,9 +160,6 @@ def drawfigure_2d(bunch, np_vaf, output_filename, **kwargs):
     matplotlib.pyplot.suptitle("clone{}.{}-{},  Total prob = {}".format(kwargs["NUM_CLONE"], kwargs["TRIAL"], kwargs["STEP"], round(bunch.likelihood)), fontsize=20)
     matplotlib.pyplot.title("sum_child = {}".format( list (np.round( np.sum (bunch.mixture[:, bunch.makeone_index], axis = 1), 3) )), fontsize = 12)
 
-    if (bunch.includefp == True) & (bunch.fp_index == -1):
-        print("무슨 일이길래 fp 있다고 하면서 -1일지? {}\t{}\t".format(bunch.fp_index_record, bunch.makeone_index_record))
-
     if (bunch.includefp == True) & (bunch.fp_index != -1):
         fp_color_num = samplename_dict[bunch.fp_index]
         colorlist[fp_color_num] = Gr_10[10]
@@ -182,7 +169,8 @@ def drawfigure_2d(bunch, np_vaf, output_filename, **kwargs):
     for sample_index, sample in enumerate(samplename_dict):
         if (sample_index >= bunch.mixture.shape[1]):
             continue
-        # mixture 정보를 바탕으로
+
+        # Drawe the centroid based on mixture
         x_mean = round(bunch.mixture[0][sample_index], 2)
         y_mean = round(bunch.mixture[1][sample_index], 2)
         matplotlib.pyplot.text(x_mean, y_mean, "{0}".format( [x_mean, y_mean]), verticalalignment='top', fontdict = {"fontsize": 16, "fontweight" : "bold"} )
@@ -204,13 +192,11 @@ def drawfigure_2d(bunch, np_vaf, output_filename, **kwargs):
 
 
 
-# Block 1, 2:  data point를 2차원 평면상에 그려보기
 def drawfigure_2d_soft(bunch, np_vaf, output_filename, **kwargs):
     if kwargs["OPTION"] in ["Hard", "hard"]:
         matplotlib.pyplot.style.use("seaborn-white")
     elif kwargs["OPTION"] in ["Soft", "soft"]:
-        #matplotlib.pyplot.style.use("seaborn-darkgrid")   # 디버깅용이면 이게 편한데
-        matplotlib.pyplot.style.use("seaborn-white")    # figure 작업하려면 이게 편하다
+        matplotlib.pyplot.style.use("seaborn-white") 
     elif kwargs["OPTION"] in ["fp", "fp"]:
         matplotlib.pyplot.style.use("Solarize_Light2")
 
@@ -237,13 +223,12 @@ def drawfigure_2d_soft(bunch, np_vaf, output_filename, **kwargs):
     matplotlib.pyplot.figure(figsize=(6, 6))
 
     dimensionreduction = ""
-    if bunch.mixture.shape[0] > 2:  # 3차원 이상이면
+    if bunch.mixture.shape[0] > 2:  # More than 3 samples
         dimensionreduction = "SVD"
 
     if dimensionreduction == "SVD":
         print("SVD → 2D")
         tsvd = TruncatedSVD(n_components=2)
-        # mixture 도 square로 찍어주려면 차원축소 변환을 잘 해줘야 한다
         tsvd.fit(np.concatenate([np_vaf, bunch.mixture]))
         np_vaf = tsvd.transform(np.concatenate(  [np_vaf, bunch.mixture]))[:-NUM_BLOCK]
         mixture = tsvd.transform(np.concatenate( [np_vaf, bunch.mixture]))[-NUM_BLOCK:]
@@ -253,7 +238,6 @@ def drawfigure_2d_soft(bunch, np_vaf, output_filename, **kwargs):
     elif dimensionreduction == "PCA":
         print("PCA → 2D")
         pca = PCA(n_components=2)
-        # mixture 도 square로 찍어주려면 차원축소 변환을 잘 해줘야 한다
         pca.fit(np.concatenate([np_vaf, bunch.mixture]))
         np_vaf = pca.transform(np.concatenate( [np_vaf, bunch.mixture]))[:-NUM_BLOCK]
         mixture = pca.transform(np.concatenate(  [np_vaf, bunch.mixture]))[-NUM_BLOCK:]
@@ -273,7 +257,6 @@ def drawfigure_2d_soft(bunch, np_vaf, output_filename, **kwargs):
         fp_color_num = samplename_dict[bunch.fp_index]
         colorlist[fp_color_num] = Gr_10[10]
 
-    # 각 점을 일일이 색칠하기
     
     
     for j in range(0, NUM_CLONE):
@@ -286,15 +269,13 @@ def drawfigure_2d_soft(bunch, np_vaf, output_filename, **kwargs):
                     matplotlib.pyplot.scatter( np_vaf[k, 0] * 2, np_vaf[k, 1] * 2, alpha=1, color=[colorlist[samplename_dict[j]]])
                 elif bunch.membership_p_normalize[k, j] > 0.1:
                     matplotlib.pyplot.scatter( np_vaf[k, 0] * 2, np_vaf[k, 1] * 2, alpha=bunch.membership_p_normalize[k, j], color=[colorlist[samplename_dict[j]]])
-                else:        # 10%도 기여하지 못한다면 칠하지 말고 넘어가자
+                else: 
                     continue
 
     for sample_index, sample_key in enumerate(samplename_dict):
         if (sample_index >= bunch.mixture.shape[1]):
             continue
 
-        # mixture 정보를 바탕으로 (얘는 앞부터 순차적으로 해야 하니까 sample_index가 맞다)
-        # 얘도 2차원으로 차원축소했으니 걱정없다
         x_mean = round(bunch.mixture[0][sample_index], 2)
         y_mean = round(bunch.mixture[1][sample_index], 2)
         matplotlib.pyplot.text(x_mean, y_mean, "{0}".format( [x_mean, y_mean]), verticalalignment='top', fontdict = {"fontsize": 16, "fontweight" : "bold"})
@@ -307,11 +288,6 @@ def drawfigure_2d_soft(bunch, np_vaf, output_filename, **kwargs):
         else:
             matplotlib.pyplot.scatter(x_mean, y_mean, marker='+', color=colorlist[sample_index], edgecolor='black', s=200, label="cluster" + str(sample_index) + " : " + str(list(bunch.membership).count(sample_index)))
 
-        # membership & np_vaf 정보를 바탕으로
-        # x_mean = round(np.mean(np_vaf[[x for x in range( len(membership)) if membership[x] == sample_key]][:, 0] * 2), 2)
-        # y_mean = round(np.mean(np_vaf[[x for x in range( len(membership)) if membership[x] == sample_key]][:, 1] * 2), 2)
-        # matplotlib.pyplot.text(x_mean, y_mean, "{0}".format([x_mean, y_mean]), verticalalignment='top')
-        # matplotlib.pyplot.scatter(x_mean, y_mean, marker='^', color=colorlist[sample_value],  s=150,  label="hard : cluster" + str(sample_key) + " : " + str(list(membership).count(sample_key)))
         matplotlib.pyplot.legend()
 
     if output_filename != "NotSave":

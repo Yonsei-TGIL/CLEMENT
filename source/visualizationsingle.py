@@ -25,7 +25,7 @@ def drawfigure_1d(membership, output_suptitle, output_filename, np_vaf, samplena
     matplotlib.pyplot.style.use("seaborn-white")
 
     if includefp == True:
-        colorlist[ fp_index ] = Gr_10[8]        # Outlier는 까만색으로 지정해준다
+        colorlist[ fp_index ] = Gr_10[8]       
     
     fig, ax = matplotlib.pyplot.subplots (figsize = (6, 6))
     matplotlib.pyplot.suptitle(output_suptitle, fontsize = 20)
@@ -35,12 +35,12 @@ def drawfigure_1d(membership, output_suptitle, output_filename, np_vaf, samplena
 
     x = np.linspace(0, 2, 200)
 
-    for k in sorted(list(set(membership))):        # 각 clone number를 따로 돈다
-        np_vaf_new_index, np_vaf_new = extract.npvaf(np_vaf, membership, k)           # membership1  == clone_num 인 것만 추려옴
+    for k in sorted(list(set(membership))):  
+        np_vaf_new_index, np_vaf_new = extract.npvaf(np_vaf, membership, k)
         
-        try:             # 0만 가득 차 있는 경우 kde를 못 그린다
+        try:
             kde_np_vaf_new = kde.gaussian_kde(np_vaf_new[:, 0] * 2)
-            weight = len(np_vaf_new) / len(np_vaf)  # weight를 줘서 total density 적분값이 1이 되도록 하자
+            weight = len(np_vaf_new) / len(np_vaf)
 
             y = kde_np_vaf_new(x) * weight
             if max_y < np.max(y):
@@ -71,7 +71,7 @@ def drawfigure_1d(membership, output_suptitle, output_filename, np_vaf, samplena
 
 
 
-# Block 1, 2:  data point를 2차원 평면상에 그려보기
+
 def drawfigure_2d(membership, output_suptitle, output_filename, np_vaf, samplename_dict, includefp, fp_index, dimensionreduction="None"):
     vivid_10 = palettable.cartocolors.qualitative.Vivid_10.mpl_colors
     bdo = palettable.lightbartlein.diverging.BlueDarkOrange18_18.mpl_colors
@@ -118,7 +118,7 @@ def drawfigure_2d(membership, output_suptitle, output_filename, np_vaf, samplena
     fig.suptitle(output_suptitle, fontsize = 20)
 
     if includefp == True:
-        outlier_color_num = samplename_dict[ fp_index ]       # 맨 마지막 번호의 색깔번호 (Outlier 번호)
+        outlier_color_num = samplename_dict[ fp_index ] 
         colorlist [ outlier_color_num ] = Gr_10[8]
 
     ax.scatter(np_vaf[:, 0] * 2, np_vaf[:, 1] * 2, color=[colorlist[samplename_dict[k]] for k in membership], s = 40)
@@ -128,20 +128,7 @@ def drawfigure_2d(membership, output_suptitle, output_filename, np_vaf, samplena
         for sample_index, sample in enumerate(samplename_dict):
             if sample not in set(membership):
                 continue
-            # # Outlier는 까만 사각형 칠하지도 말자
-            # if includefp == "Yes":
-            #     if sample_index == len(list(samplename_dict)) - 1:
-            #         continue
 
-            # mixture 정보를 바탕으로
-            # x_mean = mixture2[0][sample_index]
-            # y_mean = mixture2[1][sample_index]
-            # ax[1].text(x_mean, y_mean, "{0}".format(
-            #     [x_mean, y_mean]), verticalalignment='top')
-            # ax[1].scatter(x_mean, y_mean, marker='s', color=colorlist[sample_index], edgecolor='black', s=100,
-            #               label="cluster" + str(sample_index) + " : " + str(list(membership2).count(sample_index)))
-
-            # membership & np_vaf 정보를 바탕으로
             x_mean = round(np.mean(np_vaf[[x for x in range( len(membership)) if membership[x] == sample]][:, 0] * 2), 2)
             y_mean = round(np.mean(np_vaf[[x for x in range( len(membership)) if membership[x] == sample]][:, 1] * 2), 2)
 

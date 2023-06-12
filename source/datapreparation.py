@@ -7,16 +7,16 @@ def makedf ( **kwargs ):
 
     input_containpos = pd.read_csv( kwargs["INPUT_TSV"],  header = None, sep = "\t") 
     
-    if input_containpos.shape[1] == 3: #  3번쨰 column (BQ)가 없다면
+    if input_containpos.shape[1] == 3: #  If 4th column (BQ) is absent
         input_containpos.columns = ["pos", "sample", "info"]
         input_containpos.astype ({"pos":"str", "sample":"str", "info":"str"})
-    elif input_containpos.shape[1] == 4: #  3번쨰 column (BQ)가 있다면
+    elif input_containpos.shape[1] == 4: #  If 4th column (BQ) is present
         input_containpos.columns = ["pos", "sample", "info", "BQ"]
         input_containpos.astype ({"pos":"str", "sample":"str", "info":"str", "BQ":"str"})
     
     
-    input_containpos ["cha1"] = "child"  # monoclone이면 child, 둘 이상의 clone이 합쳐진거면 parent
-    input_containpos ["cha2"] = "space"       # 축 상에 있으면 axis, 공간 상에 있으면 space
+    input_containpos ["cha1"] = "child"         # child, parent
+    input_containpos ["cha2"] = "space"       # axis (FN), space 
     samplename_dict_CharacterToNum = {}
     samplename_dict_NumToCharacter = {}
 
@@ -25,8 +25,8 @@ def makedf ( **kwargs ):
         kwargs["RANDOM_PICK"] = input_containpos.shape[0]
 
     np_vaf = np.zeros(( kwargs["NUM_MUTATION"], kwargs["NUM_BLOCK"]), dtype = 'float')
-    np_BQ = np.zeros(( kwargs["NUM_MUTATION"], kwargs["NUM_BLOCK"]), dtype = 'float')       # BQ를 담은 것. 초기값으로 20으로 setting해준다
-    np_BQ.fill(20)
+    np_BQ = np.zeros(( kwargs["NUM_MUTATION"], kwargs["NUM_BLOCK"]), dtype = 'float')
+    np_BQ.fill(20)  # default BQ is 20
     inputdf = pd.DataFrame (np.zeros(( kwargs["NUM_MUTATION"], kwargs["NUM_BLOCK"]), dtype = 'object'), columns = ['block' + str(i + 1) for i in range(kwargs["NUM_BLOCK"])])
     mutation_id = []
     membership = []
@@ -34,7 +34,7 @@ def makedf ( **kwargs ):
     
 
 
-    # input 형식은 n * 3 으로 구성 :   ID (chr_pos), membmership(정답 set 일 경우),  NUM_BLOCK_INPUT(3)만큼의 depth, alt 정보
+    # input_containpos (n * 3)  :  ID (chr_pos), membmership_answer, genomic_profile (Depth1,Alt1,Depth2,Alt2,...,Depth_n,Alt_n)
 
     depth_col = [[]] * int(len(input_containpos.iloc[0][2].split(","))/2)
     depth_row = []
@@ -46,10 +46,9 @@ def makedf ( **kwargs ):
             input_containpos.loc[row,"cha1"] = "parent"
 
         if str(input_containpos.iloc[row][1]) not in samplename_dict_CharacterToNum.keys():
-            samplename_dict_CharacterToNum[str(input_containpos.iloc[row][1])] = int (len(samplename_dict_CharacterToNum))      # {'other': 0, 'V5': 1, 'V3': 2, 'V1': 3}           # 각 sample name을 숫자화시킴
+            samplename_dict_CharacterToNum[str(input_containpos.iloc[row][1])] = int (len(samplename_dict_CharacterToNum))      # {'other': 0, 'V5': 1, 'V3': 2, 'V1': 3}   
 
-        #rmv_bracket = re.sub("[\[\] ]", '', str(input_containpos.iloc[row][2])).split(",")            # [194, 25, 193, 66, 0, 0] 라고 되어 있는데 bracket과 한 칸 공백을 지움
-        rmv_bracket=input_containpos.iloc[row][2].split(",")     # 2번째 column의 예시  112,27,104,9  
+        rmv_bracket=input_containpos.iloc[row][2].split(",")     # 3rd column:  112,27,104,9  
         for i in range(0, len(rmv_bracket), 2 ):
             depth = int(rmv_bracket[i])
             alt = int(rmv_bracket[i+1])
@@ -66,20 +65,20 @@ def makedf ( **kwargs ):
                 depth_row_mini.append(depth)
                 depth_col[col].append(depth)
 
-            if "BQ" in input_containpos.columns: #  3번쨰 column (BQ)가 있다면
+            if "BQ" in input_containpos.columns: #  If 4th column (BQ) is present
                 if kwargs["NUM_BLOCK"] == 1:
-                    BQ_input = [input_containpos.iloc[row][3]]     # 1D는 ","가 없으니까 splitdㅣ 에러난다
+                    BQ_input = [input_containpos.iloc[row][3]]     
                 else:
-                    BQ_input = input_containpos.iloc[row][3].split(",")     # 3번째 column (BQ)의 예시  20,20
+                    BQ_input = input_containpos.iloc[row][3].split(",")   # 4th column : 20,20
                 for i in range (0, len(BQ_input) ):
                     np_BQ [row][i] = int ( BQ_input[i] )
-                    if int ( BQ_input[i] ) == 0:       # AXIS mutation의 경우 0,0이고 BQ 0일 테니까 default 20으로 넣어준다
+                    if int ( BQ_input[i] ) == 0:     # Set BQ=20 in axis (FN) variant
                         np_BQ [row][i] = 20 
 
         depth_row.append (depth_row_mini)
 
-    # "0.0.0"을 그대로 놔둘 수 없다.  평균 depth로 갈음해서 바꿔 넣는다  (alt는 0으로 유지)
 
+    # Substitute in case of depth = 0  ("0:0:0") to average depth of the other samples.
     for row in range( kwargs["NUM_MUTATION"] ):
         for  i in range(0, len(rmv_bracket), 2 ):
             col = int(i / 2)
@@ -103,7 +102,6 @@ def makedf ( **kwargs ):
 def random_pick_fun(**kwargs):
     global input_containpos, mutation_id, membership, membership_answer, inputdf, df,  np_vaf, np_BQ, samplename_dict_CharacterToNum, samplename_dict_NumToCharacter
 
-    # RANDOM하게 n개만 뽑기
     random.seed(kwargs["RANDOM_SEED"])
     random_index = sorted( list ( range (0, kwargs["NUM_MUTATION"])  ))  
     
@@ -114,7 +112,7 @@ def random_pick_fun(**kwargs):
     membership_answer = [membership[i] for i in random_index]
     mutation_id = [mutation_id[i] for i in random_index]
 
-    #np_vaf + membership를 df 형식으로 하고 RANDOM_PICK개만 출력 
+
     t = pd.DataFrame(np_vaf, columns = ["block{0}".format(i) for i in range( kwargs["NUM_BLOCK"])], index = mutation_id)
     t["membership_answer"] = pd.Series(membership_answer, index = mutation_id)
     t.to_csv ("{0}/npvaf.txt".format( kwargs["CLEMENT_DIR"] ), index = True, header=True, sep = "\t")
