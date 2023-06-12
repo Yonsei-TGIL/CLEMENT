@@ -23,7 +23,7 @@
 ### Install from github (requires Python 3.6.* or newer)
 1. git clone https://github.com/Yonsei-TGIL/CLEMENT.git   
     cd CLEMENT
-    pip3 install .
+    pip3 install .   
 *or*   
 2. pip3 install git+https://github.com/Yonsei-TGIL/CLEMENT.git    
 *or*   

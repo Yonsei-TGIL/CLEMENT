@@ -19,14 +19,14 @@ setuptools.setup(
     python_requires  = '>=3.6',
     packages = setuptools.find_packages(),
     license='GPL v3',
-    #packages         = setuptools.find_packages(exclude = ['docs', 'tests*']),
-    # package_data     =  {"" : "scripts"},
     classifiers      = [
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.6', 
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent'
     ],
     entry_points={
         'console_scripts': [
-            'CLEMENT= source.CLEMENT:main',
+            'CLEMENT= CLEMENT.CLEMENT:main',
         ]
     }
 )

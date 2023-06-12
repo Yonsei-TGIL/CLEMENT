@@ -1,9 +1,12 @@
 
 def main():
-    import os, subprocess, datetime, time, io, contextlib, argparse
-    import CLEMENTEMhard, EMsoft, Estep, Mstep, Bunch, miscellaneous, datapreparation, phylogeny, visualizationsingle, visualizationsinglesoft, filetype
+    import os, subprocess, sys, datetime, time, io, contextlib, argparse
     import numpy as np
     import pandas as pd
+    if os.getcwd() not in sys.path:
+        sys.path.append  ( os.getcwd() )
+    import EMhard, EMsoft, Estep, Mstep, Bunch, miscellaneous, datapreparation, phylogeny, visualizationsingle, visualizationsinglesoft, filetype
+
 
     pd.options.mode.chained_assignment = None
 
