@@ -312,7 +312,7 @@ def makeone(df, np_vaf,  np_BQ, step, **kwargs):
     if kwargs["VERBOSE"] >= 2:
         for i in range (0, p_list.shape[1]):
             j2 = int(p_list[1, i])
-            print ("\t\t\t∇ {}위 : subset_list_acc [j2] = {}\tsum_mixture_acc [j2] = {}\t{}번상황\tp = {}".format ( i + 1 , subset_list_acc [ j2  ], sum_mixture_acc [ j2  ], int (p_list[2, i]) , round( p_list[0, i], 2)  ))
+            print ("\t\t\t∇ {}nd place : subset_list_acc [j2] = {}\tsum_mixture_acc [j2] = {}\t{}th cirumstance\tp = {}".format ( i + 1 , subset_list_acc [ j2  ], sum_mixture_acc [ j2  ], int (p_list[2, i]) , round( p_list[0, i], 2)  ))
 
     best_j2 = int(p_list[1, 0])    # 1 : subset_list의 index  0 : 제일 잘한것 (0등)
     optimal, optimal_j2 = 0, best_j2

@@ -1,2 +1,27 @@
+NUM_CLONE == 2
+	includefp = False (fp_index = -1)		-> 500
+NUM_CLONE == 3
+	includefp = False (fp_index = -1)		-> 500
+	My Clustering	Wk  : 1.143
+	Random noise (B = 20) : 	mean Wkb = 1.158	sdk = 0.029	sk (sdk * sqrt (21)) = 0.133
+	Gap (Wkb - Wk) = 0.016
+	Posterior = -1351
+NUM_CLONE == 4
+	includefp = False (fp_index = -1)		-> 500
+NUM_CLONE == 5
+	includefp = False (fp_index = -1)		-> 500
+	My Clustering	Wk  : 1.074
+	Random noise (B = 20) : 	mean Wkb = 0.958	sdk = 0.037	sk (sdk * sqrt (21)) = 0.17
+	Gap (Wkb - Wk) = -0.116
+	Posterior = -1296
+NUM_CLONE == 6
+	includefp = False (fp_index = -1)		-> 500
+Gap list : [  -inf  0.016   -inf -0.116   -inf]
+S list : [0.    0.133 0.    0.17  0.   ]
+
 Gap statistics method (max Gap): 1th optimal NUM_CLONE = 3
+Gap statistics method (max Gap): 2th optimal NUM_CLONE = 5
+Gap statistics method (max Gap): 3th optimal NUM_CLONE = 2
+Gap statistics method (max Gap): 4th optimal NUM_CLONE = 4
+Gap statistics method (max Gap): 5th optimal NUM_CLONE = 6
 

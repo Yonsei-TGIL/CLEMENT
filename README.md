@@ -36,7 +36,8 @@ As now of 1.0.0, CLEMENT only supports standardized TSV input. Examples of input
 
 ## Running
 1. usage1: python3 CLEMENTDNA.py [OPTIONS]
-2. usage2: conda install CLEMENTDNA (on ready)
+2. usage2: pip3 install CLEMENTDNA
+3. usage3: conda install CLEMENTDNA (to be updated)
 
 **options**
 
@@ -63,8 +64,18 @@ As now of 1.0.0, CLEMENT only supports standardized TSV input. Examples of input
 		--VERBOSE	Print process →  0: no record,  1: simplified record,  2: verbose record (default: 2)
 
 
+**output**
+$\${CLEMNT_DIR}"/result"$
+		--CLEMENT_decision	CLEMENT's best recommendation among hard and soft clustering.
+		--CLEMENT_hard_1st CLEMENT's best decomposition by hard clustering.
+		--CLEMENT_hard.gapstatistics.txt Selecting the optimal K in hard clustering based on gap* stastics.
+		--CLEMENT_soft_1st CLEMENT's best decomposition by soft (fuzzy) clustering.
+		--membership.txt Membership assignment of all variants to each clusters. 
+		--membership_count.txt Count matrix of the membership assignment to each clusters.
+		--mixture.txt Centroid of each clusters
+
 ## Example
-	-python3 CLEMENT_DNA.py --INPUT_TSV "../examples/2.CellData/MRS_2D/M1-3_M1-8/M1-3_M1-8_input.tsv" --CLEMENT_DIR "../examples/2.CellData/MRS_2D/M1-3_M1-8/"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
+	-python3 CLEMENTDNA.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
 
 ## Contact
 	goldpm1@yuhs.ac

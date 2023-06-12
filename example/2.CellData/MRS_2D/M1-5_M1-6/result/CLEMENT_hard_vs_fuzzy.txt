@@ -1,0 +1,12 @@
+Moved column : []
+Hard (n = 4) : std = nan	step = 7
+hard_mixture = [[0.0693 0.7426 0.1881 0.0891]
+ [0.6263 0.2121 0.1616 0.101 ]]
+
+Soft (n = 4) : std = nan	step = 2
+hard_mixture = [[0.0649 0.7316 0.2035 0.09  ]
+ [0.5994 0.2195 0.1811 0.1   ]]
+ratio : nan
+
+soft 선택 기준 :  < 0.8600000000000001
+DECISION	hard_1st

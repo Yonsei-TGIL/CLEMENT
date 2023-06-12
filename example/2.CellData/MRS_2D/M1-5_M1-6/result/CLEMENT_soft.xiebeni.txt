@@ -1,0 +1,21 @@
+NUM_CLONE == 2
+	includefp = False (fp_index = -1)		-> 500
+	Xie-Beni index : inf
+NUM_CLONE == 3
+	includefp = False (fp_index = -1)		-> 500
+	Xie-Beni index : 1141.7026190110464
+NUM_CLONE == 4
+	includefp = True (fp_index = 3)		-> 486
+	Xie-Beni index : 1175.3997286873644
+NUM_CLONE == 5
+	includefp = False (fp_index = -1)		-> 500
+	Xie-Beni index : inf
+NUM_CLONE == 6
+	includefp = True (fp_index = 5)		-> 488
+	Xie-Beni index : 102077.55389812184
+XieBeni method (min): 1th optimal NUM_CLONE = 3
+XieBeni method (min): 2th optimal NUM_CLONE = 4
+XieBeni method (min): 3th optimal NUM_CLONE = 6
+XieBeni method (min): 4th optimal NUM_CLONE = 2
+XieBeni method (min): 5th optimal NUM_CLONE = 5
+

@@ -61,7 +61,7 @@ def main ( df, np_vaf, np_BQ, mixture_kmeans, **kwargs):
             trial_index, failure_num = 0, 0
             while trial_index < kwargs["TRIAL_NO"]:
                 kwargs["TRIAL"] = trial_index
-                print("\t#{0}th trial".format(trial_index))
+                print("\t#Trial #{0}".format(trial_index))
 
                 step = Bunch.Bunch1(NUM_MUTATION , NUM_BLOCK, NUM_CLONE, kwargs["STEP_NO"])
 
@@ -70,18 +70,18 @@ def main ( df, np_vaf, np_BQ, mixture_kmeans, **kwargs):
                 
                 if np.any(step.mixture < 0) == True: 
                     #print ("\t\tset_initial_parameter : more than one negative values", end = "\t")
-                    print(",".join(str(row) for row in step.mixture ))
+                    #print(",".join(str(row) for row in step.mixture ))
 
                     step.mixture[:, -1][step.mixture[:, -1] < 0] = 0
                     #print ("\t\tset_initial_parameter : set the negative values to zeros", end = "\t")
-                    print(",".join(str(row) for row in step.mixture ))
+                    #print(",".join(str(row) for row in step.mixture ))
 
 
 
                 for step_index in range(0, kwargs["STEP_NO"]):
                     kwargs["STEP"], kwargs["STEP_TOTAL"] = step_index, step_index
                     kwargs["OPTION"] = "hard"
-                    print ("\t\t#{}th step".format(step_index))
+                    print ("\t\t# Step #{}".format(step_index))
 
                     step = Estep.main(df, np_vaf, np_BQ, step, **kwargs)  
                     

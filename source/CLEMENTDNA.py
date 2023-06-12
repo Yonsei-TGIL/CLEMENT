@@ -42,6 +42,8 @@ kwargs["RANDOM_SEED"] = int(args.RANDOM_SEED)
 kwargs["SCORING"] = False
 kwargs["MAKEONE_STRICT"] = int(args.MAKEONE_STRICT)
 kwargs["CLEMENT_DIR"] = args.CLEMENT_DIR
+if kwargs["CLEMENT_DIR"][-1] == "/":
+    kwargs["CLEMENT_DIR"] = kwargs["CLEMENT_DIR"][0:-1]
 kwargs["method"] = "gap+normal"
 kwargs["adjustment"] = "half"
 kwargs["STEP_NO"] = 30
@@ -129,12 +131,12 @@ if kwargs["MODE"] in ["Soft", "Both"]:
                 kwargs["STEP"], kwargs["TRIAL"] = step_index, cluster_hard.trialindex_record[ NUM_CLONE ]
                 kwargs["STEP_TOTAL"] = step_index + cluster_hard.stepindex_record [ NUM_CLONE ] - 1
                 
-                print("\t\t#{}번째 step ( = TOTAL {}번째 step)".format(kwargs["STEP"], kwargs["STEP_TOTAL"]) )
+                print("\t\tstep #{} ( = TOTAL step #{})".format(kwargs["STEP"], kwargs["STEP_TOTAL"]) )
 
                 step_soft = Estep.main(df, np_vaf, np_BQ, step_soft, **kwargs)               # E step
-                print ( "\t\t\tE step 이후 : {}\tmakeone_index : {}".format( np.unique(step_soft.membership  , return_counts=True), step_soft.makeone_index ) )
+                print ( "\t\t\tAfter the E step: {}\tmakeone_index : {}".format( np.unique(step_soft.membership  , return_counts=True), step_soft.makeone_index ) )
                 step_soft = Mstep.main(df, np_vaf, np_BQ, step_soft, "Soft", **kwargs)     # M step
-                print("\t\t\tM step 이후 : fp_index {}\tmakeone_index {}\tlikelihood : {}".format( step_soft.fp_index, step_soft.makeone_index, round (step_soft.likelihood, 1), step_soft.mixture ))
+                print("\t\t\tAfter the M step : fp_index {}\tmakeone_index {}\tlikelihood : {}".format( step_soft.fp_index, step_soft.makeone_index, round (step_soft.likelihood, 1), step_soft.mixture ))
 
 
                 step_soft.acc(step_soft.mixture, step_soft.membership, step_soft.likelihood, step_soft.membership_p, step_soft.membership_p_normalize, step_soft.makeone_index, step_soft.fp_index, step_index + 1, step_soft.fp_member_index, step_soft.includefp, step_soft.fp_involuntary, step_soft.makeone_prenormalization, step_index, step_index)
@@ -230,6 +232,8 @@ else:
         if i >= len (NUM_CLONE_hard):
             break
         
+        print ( "NUM_CLONE_hard (by order): {}".format(NUM_CLONE_hard))
+
         if cluster_soft.mixture_record [ NUM_CLONE_hard[i] ] == []:
             if (priority == "1st") & (kwargs["MODE"] in ["Both"]):
                 print ("DECISION\t{}".format(DECISION))
@@ -294,7 +298,7 @@ if kwargs["MODE"] in ["Soft", "Both"]:
             print ("Soft : Empty")
             break
 
-        print ( "NUM_CLONE_soft : {}".format(NUM_CLONE_soft))
+        print ( "NUM_CLONE_soft (by order): {}".format(NUM_CLONE_soft))
 
         with open (kwargs["CLEMENT_DIR"] + "/result/CLEMENT_soft_" + priority + ".results.txt", "w", encoding = "utf8") as output_myEM:
             try:
