@@ -7,8 +7,8 @@ import setuptools
 
 
 setuptools.setup(
-    name             = 'CLEMENTDNA',
-    version          = '1.0.0',
+    name             = 'CLEMENT-DNA',
+    version          = '1.0.1',
     description      = 'Genomic decomposition and reconstruction of non-tumor diploid subclones',
     author           = 'Young-soo Chung, M.D.',
     author_email     = 'goldpm1@yuhs.ac',
