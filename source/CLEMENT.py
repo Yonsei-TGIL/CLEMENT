@@ -1,9 +1,10 @@
-import os, subprocess, datetime, time, io, contextlib, argparse
-import EMhard, EMsoft, Estep, Mstep, Bunch, miscellaneous, datapreparation, phylogeny, visualizationsingle, visualizationsinglesoft, filetype
-import numpy as np
-import pandas as pd
 
 def main():
+    import os, subprocess, datetime, time, io, contextlib, argparse
+    import EMhard, EMsoft, Estep, Mstep, Bunch, miscellaneous, datapreparation, phylogeny, visualizationsingle, visualizationsinglesoft, filetype
+    import numpy as np
+    import pandas as pd
+    
     pd.options.mode.chained_assignment = None
 
     kwargs = {}
