@@ -47,27 +47,28 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 
 ### options
 
-	These options are regarding User's input and output format.
-		--INPUT_TSV		Input data whether TSV. The tool automatically detects the number of samples. (mandatory)
-		--CLEMENT_DIR 		Directory where the outputs of CLEMENT be saved. (mandatory)
+	(Mandatory) These options are regarding User's input and output format
+		--INPUT_TSV		Input data whether TSV. The tool automatically detects the number of samples
+		--CLEMENT_DIR 		Directory where the outputs of CLEMENT be saved
 
 	These options are regarding downsizing User's input or not
-		--RANDOM_PICK 		Set this variable to user want to downsize the sample. If user don't want to downsize, set -1 (default).
+		--RANDOM_PICK 		Set this variable to user want to downsize the sample. If user don't want to downsize, set -1. (default : -1).
 	
 	These options are adjusting E-M algorithm parameter
-		--NUM_CLONE_TRIAL_START 	Minimum number of expected cluster_hards (initation of K) (default: 3)
-		--NUM_CLONE_TRIAL_END 		Maximum number of expected cluster_hards (termination of K) (default: 5)
+		--NUM_CLONE_TRIAL_START 	Minimum number of expected cluster_hards (initation of K) 	(default: 3)
+		--NUM_CLONE_TRIAL_END 		Maximum number of expected cluster_hards (termination of K)	 (default: 5)
 		--TRIAL_NO 			Trial number in each candidate cluster_hard number. DO NOT recommend over 15 (default: 5)
 		--KMEANS_CLUSTERNO		Number of initial K-means cluster. Recommendation : 5~8 for one-sample, 8-15 for larger-sample (default: 8)
-		--MIN_CLUSTER_SIZE		The minimum cluster size that is acceptable (default: 9)
+		--MIN_CLUSTER_SIZE		The minimum cluster size that is acceptable. Recommendation : 1-3% of total variants number 	(default: 9)
 
 	Other options
-		--MODE			Selection of clustering method  "Hard" : hard clustering only,  "Both" : both hard and soft (fuzzy) clustering (default: "Both")
-		--MAKEONE_STRICT  	1:strict, 2:lenient. (default : 1)
+		--MODE			Selection of clustering method.
+					"Hard": hard clustering only,  "Both": both hard and soft (fuzzy) clustering (default: "Both")
+		--MAKEONE_STRICT  	1: strict, 2: lenient (default : 1)
 		--TN_CONFIDENTIALITY  	Confidentiality that negative being negative (TN). Recommendation : > 0.99. (default : 0.995)
 
 	Miscelleneous
-		--VERBOSE	Print process →  0: no record,  1: simplified record,  2: verbose record (default: 2)
+		--VERBOSE		0: no record,  1: simplified record,  2: verbose record (default: 2)
 
 
 ### output
