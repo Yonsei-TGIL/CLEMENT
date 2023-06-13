@@ -19,6 +19,7 @@ setuptools.setup(
     python_requires  = '>=3.6',
     packages = setuptools.find_packages(),
     license='GPL v3',
+    license_files="LICENSE.txt",
     classifiers      = [
         'Programming Language :: Python :: 3.6', 
         'License :: OSI Approved :: MIT License',

@@ -1,0 +1,3 @@
+	CLEMENT_decision	pyclonevi	quantumclone	sciclone
+2D	0.81	0.77	0.64	0.68
+3D	0.91	0.9	0.78	0.79
