@@ -92,8 +92,6 @@ CLEMENT [OPTIONS]
 	[Installation through PyPi]
 	CLEMENT --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
 	
-![CLEMENT_example](https://github.com/Yonsei-TGIL/CLEMENT/assets/56012432/36dbbd01-0926-4802-8b3e-d91b9fbc7d57)
-<br/>
 
 <br/>
 ![CLEMENT_example](https://github.com/Yonsei-TGIL/CLEMENT/assets/56012432/36dbbd01-0926-4802-8b3e-d91b9fbc7d57)
