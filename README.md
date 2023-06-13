@@ -49,7 +49,7 @@ python3 CLEMENT.py [OPTIONS]
 CLEMENT [OPTIONS]   
 
 
-**options**
+### options
 
 	These options are regarding User's input and output format.
 		--INPUT_TSV	Input data whether TSV. The tool automatically detects the number of samples. (mandatory)
@@ -74,7 +74,7 @@ CLEMENT [OPTIONS]
 		--VERBOSE	Print process →  0: no record,  1: simplified record,  2: verbose record (default: 2)
 
 
-**output**
+### output
 
 **${CLEMENT_DIR}"/result"**
 - **CLEMENT_decision**	CLEMENT's best recommendation among hard and soft clustering.
@@ -88,9 +88,10 @@ CLEMENT [OPTIONS]
 ## Example
 	[Installation through git clone]
 	python3 CLEMENT.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500   
-	or   
+	
 	[Installation through PyPi]
-	CLEMENT --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
+	DIR=[YOUR_DIRECTORY]
+	CLEMENT --INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
 	
 
 
