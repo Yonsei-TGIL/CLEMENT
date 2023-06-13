@@ -30,9 +30,6 @@
 ### Install from PyPi
 3. pip3 install CLEMENTDNA   
 
-### Install from Conda (to be updated)   
-4. conda install CLEMENTDNA (to be updated)   
-
 ## Version update
 1.0.2 (June 13th, 2023)
 
@@ -45,10 +42,6 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 
 ## Running
 ### command line interface
-	[Installation through git clone]
-	python3 CLEMENT.py [OPTIONS]  
-	   
-	[Installation through PyPi]
 	CLEMENT [OPTIONS]   
 
 
@@ -89,15 +82,6 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 - **mixture.txt** _Centroid of each clusters_
 
 ## Example
-	[Installation through git clone]
-	python3 CLEMENT.py \
-		--INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" \
-		--CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  \
-		--NUM_CLONE_TRIAL_START 2 -\
-		-NUM_CLONE_TRIAL_END 6 \
-		--RANDOM_PICK 500   
-	
-	[Installation through PyPi]
 	DIR=[YOUR_DIRECTORY]
 	CLEMENT \
 		--INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" \
