@@ -34,10 +34,10 @@
 4. conda install CLEMENTDNA (to be updated)   
 
 ## Version update
-1.0.2 (June 13rd, 2023)
+1.0.2 (June 13th, 2023)
 
 ## Input format
-As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input file is shown in "example" directory.
+As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input file is shown in _"example"_ directory.
 - 1st column: mutation ID (CHR_POS is recommended)
 - 2nd column: label  (answer), if possible. If user don't know the label (answer), just set 0
 - 3rd column: **Depth1,Alt1,Depth2,Alt2....,Depth_n,Alt_n**    * should be comma-separated, and no space permitted
@@ -80,8 +80,8 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 ### output
 
 **${CLEMENT_DIR}"/result"**
-- **CLEMENT_decision**	\t _CLEMENT's best recommendation among hard and soft clustering._
-- **CLEMENT_hard_1st** \t _CLEMENT's best decomposition by hard clustering._
+- **CLEMENT_decision**	_CLEMENT's best recommendation among hard and soft clustering._
+- **CLEMENT_hard_1st**  _CLEMENT's best decomposition by hard clustering._
 - **CLEMENT_hard.gapstatistics.txt** _Selecting the optimal K in hard clustering based on gap* stastics._
 - **CLEMENT_soft_1st** _CLEMENT's best decomposition by soft (fuzzy) clustering._
 - **membership.txt** _Membership assignment of all variants to each clusters._
