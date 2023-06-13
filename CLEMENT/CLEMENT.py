@@ -3,8 +3,11 @@ def main():
     import os, subprocess, sys, datetime, time, io, contextlib, argparse
     import numpy as np
     import pandas as pd
-    if os.getcwd() not in sys.path:
-        sys.path.append  ( os.getcwd() )
+
+    print ( "Package directory : {}".format (  os.path.dirname(__file__) ) )
+    if os.path.dirname(__file__) not in sys.path:
+       sys.path.append  ( os.path.dirname(__file__) )
+       
     import EMhard, EMsoft, Estep, Mstep, Bunch, miscellaneous, datapreparation, phylogeny, visualizationsingle, visualizationsinglesoft, filetype
 
 

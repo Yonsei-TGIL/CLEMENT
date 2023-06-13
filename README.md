@@ -22,20 +22,22 @@
 
 ### Install from github (requires Python 3.6.* or newer)
 1. git clone https://github.com/Yonsei-TGIL/CLEMENT.git   
-    cd CLEMENT
+    cd CLEMENT   
     pip3 install .   
 *or*   
 2. pip3 install git+https://github.com/Yonsei-TGIL/CLEMENT.git    
-*or*   
-3. pip3 install CLEMENTDNA
-*or* 
-4. conda install CLEMENTDNA (to be updated)
+
+### Install from PyPi
+3. pip3 install CLEMENTDNA   
+
+### Install from Conda
+4. conda install CLEMENTDNA (to be updated)   
 
 ## Version update
-1.0.1 (June 12th, 2023)
+1.0.2 (June 13rd, 2023)
 
 ## Input format
-As now of 1.0.1, CLEMENT only supports standardized TSV input. Examples of input file is shown in "example" directory.
+As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input file is shown in "example" directory.
 - 1st column: mutation ID (CHR_POS is recommended)
 - 2nd column: label  (answer), if possible. If user don't know the label (answer), just set 0
 - 3rd column: **Depth1,Alt1,Depth2,Alt2....,Depth_n,Alt_n**    * should be comma-separated, and no space permitted
@@ -74,7 +76,7 @@ CLEMENT [OPTIONS]
 
 **output**
 
-${CLEMENT_DIR}"/result"
+**${CLEMENT_DIR}"/result"**
 - **CLEMENT_decision**	CLEMENT's best recommendation among hard and soft clustering.
 - **CLEMENT_hard_1st** CLEMENT's best decomposition by hard clustering.
 - **CLEMENT_hard.gapstatistics.txt** Selecting the optimal K in hard clustering based on gap* stastics.
@@ -84,8 +86,15 @@ ${CLEMENT_DIR}"/result"
 - **mixture.txt** Centroid of each clusters
 
 ## Example
+	[Installation through git clone]
 	python3 CLEMENT.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500   
+	or   
+	[Installation through PyPi]
 	CLEMENT --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
+
+<br/>
+![CLEMENT_example](https://github.com/Yonsei-TGIL/CLEMENT/assets/56012432/36dbbd01-0926-4802-8b3e-d91b9fbc7d57)
+<br/>
 
 ## Contact
 	goldpm1@yuhs.ac
