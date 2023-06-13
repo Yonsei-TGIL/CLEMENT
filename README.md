@@ -45,10 +45,10 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 
 ## Running
 ### command line interface
-	[1. Installed through git-clone]<br/>
+	[1. Installed through git-clone]   
 	python3 CLEMENT.py [OPTIONS]  
-	<br/>
-	[2. Installed through PyPi] <br/>
+	   
+	[2. Installed through PyPi]   
 	CLEMENT [OPTIONS]   
 
 
@@ -90,11 +90,21 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 
 ## Example
 	[Installation through git clone]
-	python3 CLEMENT.py --INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500   
+	python3 CLEMENT.py \
+		--INPUT_TSV "../example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" \
+		--CLEMENT_DIR "../example/2.CellData/MRS_2D/M1-5_M1-6"  \
+		--NUM_CLONE_TRIAL_START 2 -\
+		-NUM_CLONE_TRIAL_END 6 \
+		--RANDOM_PICK 500   
 	
 	[Installation through PyPi]
 	DIR=[YOUR_DIRECTORY]
-	CLEMENT --INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" --CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6"  --NUM_CLONE_TRIAL_START 2 --NUM_CLONE_TRIAL_END 6 --RANDOM_PICK 500
+	CLEMENT \
+		--INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" \
+		--CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6"  \
+		--NUM_CLONE_TRIAL_START 2 \
+		--NUM_CLONE_TRIAL_END 6 \
+		--RANDOM_PICK 500
 	
 
 
