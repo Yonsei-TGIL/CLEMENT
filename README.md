@@ -20,7 +20,7 @@
 - scipy 1.7.3
 - palettable 3.3.0
 
-### Install from github (requires Python 3.6.* or newer)
+### Install from github (r
 1. git clone https://github.com/Yonsei-TGIL/CLEMENT.git   
     cd CLEMENT   
     pip3 install .   
@@ -30,7 +30,7 @@
 ### Install from PyPi
 3. pip3 install CLEMENTDNA   
 
-### Install from Conda
+### Install from Conda (to be updated)   
 4. conda install CLEMENTDNA (to be updated)   
 
 ## Version update
@@ -44,8 +44,10 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 - 4th column: **BQ1,BQ2....,BQ_n**    * should be comma-separated, and no space permitted. If absent, CLEMENT set default BQ as 20.
 
 ## Running
-python3 CLEMENT.py [OPTIONS]   
-*or*   
+[1. Installed through git-clone]
+python3 CLEMENT.py [OPTIONS]  
+<br/>
+[2. Installed through PyPi] 
 CLEMENT [OPTIONS]   
 
 
