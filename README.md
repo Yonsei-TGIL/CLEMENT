@@ -48,23 +48,23 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 ### options
 
 	These options are regarding User's input and output format.
-		--INPUT_TSV	Input data whether TSV. The tool automatically detects the number of samples. (mandatory)
-		--CLEMENT_DIR Directory where the outputs of CLEMENT be saved. (mandatory)
+		--INPUT_TSV		Input data whether TSV. The tool automatically detects the number of samples. (mandatory)
+		--CLEMENT_DIR 		Directory where the outputs of CLEMENT be saved. (mandatory)
 
 	These options are regarding downsizing User's input or not
-		--RANDOM_PICK Set this variable to user want to downsize the sample. If user don't want to downsize, set -1 (default).
+		--RANDOM_PICK 		Set this variable to user want to downsize the sample. If user don't want to downsize, set -1 (default).
 	
 	These options are adjusting E-M algorithm parameter
-		--NUM_CLONE_TRIAL_START Minimum number of expected cluster_hards (initation of K) (default: 3)
-		--NUM_CLONE_TRIAL_END Maximum number of expected cluster_hards (termination of K) (default: 5)
-		--TRIAL_NO Trial number in each candidate cluster_hard number. DO NOT recommend over 15 (default: 5)
-		--KMEANS_CLUSTERNO	Number of initial K-means cluster. Recommendation : 5~8 for one-sample, 8-15 for larger-sample (default: 8)
-		--MIN_CLUSTER_SIZE	The minimum cluster size that is acceptable (default: 9)
+		--NUM_CLONE_TRIAL_START 	Minimum number of expected cluster_hards (initation of K) (default: 3)
+		--NUM_CLONE_TRIAL_END 		Maximum number of expected cluster_hards (termination of K) (default: 5)
+		--TRIAL_NO 			Trial number in each candidate cluster_hard number. DO NOT recommend over 15 (default: 5)
+		--KMEANS_CLUSTERNO		Number of initial K-means cluster. Recommendation : 5~8 for one-sample, 8-15 for larger-sample (default: 8)
+		--MIN_CLUSTER_SIZE		The minimum cluster size that is acceptable (default: 9)
 
 	Other options
-		--MODE	Selection of clustering method  "Hard" : hard clustering only,  "Both" : both hard and soft (fuzzy) clustering (default: "Both")
-		--MAKEONE_STRICT  1:strict, 2:lenient. (default : 1)
-		--TN_CONFIDENTIALITY  Confidentiality that negative being negative (TN). Recommendation : > 0.99. (default : 0.995)
+		--MODE			Selection of clustering method  "Hard" : hard clustering only,  "Both" : both hard and soft (fuzzy) clustering (default: "Both")
+		--MAKEONE_STRICT  	1:strict, 2:lenient. (default : 1)
+		--TN_CONFIDENTIALITY  	Confidentiality that negative being negative (TN). Recommendation : > 0.99. (default : 0.995)
 
 	Miscelleneous
 		--VERBOSE	Print process →  0: no record,  1: simplified record,  2: verbose record (default: 2)
@@ -73,13 +73,13 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 ### output
 
 **${CLEMENT_DIR}"/result"**
-- **CLEMENT_decision**	_CLEMENT's best recommendation among hard and soft clustering._
-- **CLEMENT_hard_1st**  _CLEMENT's best decomposition by hard clustering._
-- **CLEMENT_hard.gapstatistics.txt** _Selecting the optimal K in hard clustering based on gap* stastics._
-- **CLEMENT_soft_1st** _CLEMENT's best decomposition by soft (fuzzy) clustering._
-- **membership.txt** _Membership assignment of all variants to each clusters._
-- **membership_count.txt** _Count matrix of the membership assignment to each clusters._
-- **mixture.txt** _Centroid of each clusters_
+- **CLEMENT_decision**		_CLEMENT's best recommendation among hard and soft clustering._
+- **CLEMENT_hard_1st**  	_CLEMENT's best decomposition by hard clustering._
+- **CLEMENT_hard.gapstatistics.txt** 	_Selecting the optimal K in hard clustering based on gap* stastics._
+- **CLEMENT_soft_1st** 	_CLEMENT's best decomposition by soft (fuzzy) clustering._
+- **membership.txt** 	_Membership assignment of all variants to each clusters._
+- **membership_count.txt** 	_Count matrix of the membership assignment to each clusters._
+- **mixture.txt** 	_Centroid of each clusters_
 
 ## Example
 	DIR=[YOUR_DIRECTORY]
