@@ -39,7 +39,7 @@
 ## Input format
 As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input file is shown in _"example"_ directory.
 - 1st column: mutation ID (CHR_POS is recommended)
-- 2nd column: label  (answer), if possible. If user don't know the label (answer), just set 0
+- 2nd column: label (answer), if possible. If user don't know the label (answer), just set 0
 - 3rd column: **Depth1,Alt1,Depth2,Alt2....,Depth_n,Alt_n**    * should be comma-separated, and no space permitted
 - 4th column: **BQ1,BQ2....,BQ_n**    * should be comma-separated, and no space permitted. If absent, CLEMENT set default BQ as 20.
 
