@@ -45,10 +45,10 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 
 ## Running
 ### command line interface
-	[1. Installed through git-clone]   
+	[Installation through git clone]
 	python3 CLEMENT.py [OPTIONS]  
 	   
-	[2. Installed through PyPi]   
+	[Installation through PyPi]
 	CLEMENT [OPTIONS]   
 
 
@@ -80,8 +80,8 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 ### output
 
 **${CLEMENT_DIR}"/result"**
-- **CLEMENT_decision**	_CLEMENT's best recommendation among hard and soft clustering._
-- **CLEMENT_hard_1st** _CLEMENT's best decomposition by hard clustering._
+- **CLEMENT_decision**	\t _CLEMENT's best recommendation among hard and soft clustering._
+- **CLEMENT_hard_1st** \t _CLEMENT's best decomposition by hard clustering._
 - **CLEMENT_hard.gapstatistics.txt** _Selecting the optimal K in hard clustering based on gap* stastics._
 - **CLEMENT_soft_1st** _CLEMENT's best decomposition by soft (fuzzy) clustering._
 - **membership.txt** _Membership assignment of all variants to each clusters._
