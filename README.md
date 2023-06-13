@@ -20,11 +20,11 @@
 - scipy 1.7.3
 - palettable 3.3.0
 
-### Install from github (r
+### Install from github
 1. git clone https://github.com/Yonsei-TGIL/CLEMENT.git   
     cd CLEMENT   
     pip3 install .   
-*or*   
+
 2. pip3 install git+https://github.com/Yonsei-TGIL/CLEMENT.git    
 
 ### Install from PyPi
@@ -44,11 +44,12 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 - 4th column: **BQ1,BQ2....,BQ_n**    * should be comma-separated, and no space permitted. If absent, CLEMENT set default BQ as 20.
 
 ## Running
-[1. Installed through git-clone]
-python3 CLEMENT.py [OPTIONS]  
-<br/>
-[2. Installed through PyPi] 
-CLEMENT [OPTIONS]   
+### command line interface
+	[1. Installed through git-clone]<br/>
+	python3 CLEMENT.py [OPTIONS]  
+	<br/>
+	[2. Installed through PyPi] <br/>
+	CLEMENT [OPTIONS]   
 
 
 ### options
@@ -79,13 +80,13 @@ CLEMENT [OPTIONS]
 ### output
 
 **${CLEMENT_DIR}"/result"**
-- **CLEMENT_decision**	CLEMENT's best recommendation among hard and soft clustering.
-- **CLEMENT_hard_1st** CLEMENT's best decomposition by hard clustering.
-- **CLEMENT_hard.gapstatistics.txt** Selecting the optimal K in hard clustering based on gap* stastics.
-- **CLEMENT_soft_1st** CLEMENT's best decomposition by soft (fuzzy) clustering.
-- **membership.txt** Membership assignment of all variants to each clusters. 
-- **membership_count.txt** Count matrix of the membership assignment to each clusters.
-- **mixture.txt** Centroid of each clusters
+- **CLEMENT_decision**	_CLEMENT's best recommendation among hard and soft clustering._
+- **CLEMENT_hard_1st** _CLEMENT's best decomposition by hard clustering._
+- **CLEMENT_hard.gapstatistics.txt** _Selecting the optimal K in hard clustering based on gap* stastics._
+- **CLEMENT_soft_1st** _CLEMENT's best decomposition by soft (fuzzy) clustering._
+- **membership.txt** _Membership assignment of all variants to each clusters._
+- **membership_count.txt** _Count matrix of the membership assignment to each clusters._
+- **mixture.txt** _Centroid of each clusters_
 
 ## Example
 	[Installation through git clone]
