@@ -8,20 +8,20 @@ from sklearn.decomposition import TruncatedSVD, PCA
 from mpl_toolkits import mplot3d
 
 
-def drawfigure_1d(membership, output_suptitle, output_filename, np_vaf, samplename_dict, includefp, fp_index, makeone_index):
+def drawfigure_1d(membership, output_suptitle, output_filename, np_vaf, samplename_dict, includefp, fp_index, makeone_index, **kwargs):
     vivid_10 = palettable.cartocolors.qualitative.Vivid_10.mpl_colors
     bdo = palettable.lightbartlein.diverging.BlueDarkOrange18_18.mpl_colors
     tabl = palettable.tableau.Tableau_20.mpl_colors
     Gr_10 = palettable.scientific.sequential.GrayC_20.mpl_colors
     colorlist = [i for i in tabl]
 
-    font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
-    font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
-    for font in font_dirs:
-        matplotlib.font_manager.fontManager.addfont(font)
+    # font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
+    # font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
+    # for font in font_dirs:
+    #     matplotlib.font_manager.fontManager.addfont(font)
     #print (matplotlib.font_manager.FontProperties(fname = font).get_name())
 
-    matplotlib.rcParams["font.family"] = 'arial'
+    matplotlib.rcParams["font.family"] =  kwargs["FONT_FAMILY"]
     matplotlib.pyplot.style.use("seaborn-white")
 
     if includefp == True:
@@ -72,20 +72,20 @@ def drawfigure_1d(membership, output_suptitle, output_filename, np_vaf, samplena
 
 
 
-def drawfigure_2d(membership, output_suptitle, output_filename, np_vaf, samplename_dict, includefp, fp_index, dimensionreduction="None"):
+def drawfigure_2d(membership, output_suptitle, output_filename, np_vaf, samplename_dict, includefp, fp_index, dimensionreduction="None",  **kwargs):
     vivid_10 = palettable.cartocolors.qualitative.Vivid_10.mpl_colors
     bdo = palettable.lightbartlein.diverging.BlueDarkOrange18_18.mpl_colors
     tabl = palettable.tableau.Tableau_20.mpl_colors
     Gr_10 = palettable.scientific.sequential.GrayC_20.mpl_colors
     colorlist = [i for i in tabl]
     
-    font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
-    font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
-    for font in font_dirs:
-        matplotlib.font_manager.fontManager.addfont(font)
+    # font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
+    # font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
+    # for font in font_dirs:
+    #     matplotlib.font_manager.fontManager.addfont(font)
     #print (matplotlib.font_manager.FontProperties(fname = font).get_name())
 
-    matplotlib.rcParams["font.family"] = 'arial'
+    matplotlib.rcParams["font.family"] =  kwargs["FONT_FAMILY"]
     matplotlib.pyplot.style.use("seaborn-white")
 
     fig, ax = matplotlib.pyplot.subplots (figsize = (6, 6))

@@ -69,7 +69,8 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 		--TN_CONFIDENTIALITY  	Confidentiality that negative being negative (TN). Recommendation : > 0.99. (default : 0.995)
 
 	Miscelleneous
-		--VERBOSE		0: no record,  1: simplified record,  2: verbose record (default: 2)
+		--FONT_FAMILY	Font family that displayed in the plots (default : "arial")
+		--VERBOSE			0: no record,  1: simplified record,  2: verbose record (default: 2)
 
 
 ### output

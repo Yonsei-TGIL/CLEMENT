@@ -25,11 +25,11 @@ def drawfigure_1d_hard(bunch, np_vaf, output_filename, **kwargs):
     if (bunch.includefp == True) & (bunch.fp_index != -1):
         colorlist[bunch.fp_index] = Gr_10[8]
 
-    font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
-    font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
-    for font in font_dirs:
-        matplotlib.font_manager.fontManager.addfont(font)
-    matplotlib.rcParams["font.family"] = 'arial'
+    # font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
+    # font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
+    # for font in font_dirs:
+    #     matplotlib.font_manager.fontManager.addfont(font)
+    matplotlib.rcParams["font.family"] = kwargs["FONT_FAMILY"]
 
     matplotlib.pyplot.figure(figsize=(6, 6))
 
@@ -93,12 +93,11 @@ def drawfigure_1d_soft(bunch, np_vaf, output_filename, **kwargs):
     if (bunch.includefp == True) & (bunch.fp_index != -1):
         colorlist[bunch.fp_index] = Gr_10[8]
 
-    font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
-    font_dirs = matplotlib.font_manager.findSystemFonts(
-        fontpaths=font_dir, fontext='ttf')
-    for font in font_dirs:
-        matplotlib.font_manager.fontManager.addfont(font)
-    matplotlib.rcParams["font.family"] = 'arial'
+    # font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
+    # font_dirs = matplotlib.font_manager.findSystemFonts( fontpaths=font_dir, fontext='ttf')
+    # for font in font_dirs:
+    #     matplotlib.font_manager.fontManager.addfont(font)
+    matplotlib.rcParams["font.family"] = kwargs["FONT_FAMILY"]
 
     matplotlib.pyplot.figure(figsize=(6, 6))
     matplotlib.pyplot.xlim(0, 1)
@@ -146,11 +145,11 @@ def drawfigure_2d(bunch, np_vaf, output_filename, **kwargs):
     Gr_10 = palettable.scientific.sequential.GrayC_20.mpl_colors
     colorlist = [i for i in tabl]
 
-    font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
-    font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
-    for font in font_dirs:
-        matplotlib.font_manager.fontManager.addfont(font)
-    matplotlib.rcParams["font.family"] = 'arial'
+    # font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
+    # font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
+    # for font in font_dirs:
+    #     matplotlib.font_manager.fontManager.addfont(font)
+    matplotlib.rcParams["font.family"] = kwargs["FONT_FAMILY"]
 
     matplotlib.pyplot.figure(figsize=(6, 6))
     matplotlib.pyplot.axis( [0,  np.max(np_vaf[:, :]) * 2.1, 0,  np.max(np_vaf[:, :]) * 2.1])
@@ -210,11 +209,11 @@ def drawfigure_2d_soft(bunch, np_vaf, output_filename, **kwargs):
     Gr_10 = palettable.scientific.sequential.GrayC_20.mpl_colors
     colorlist = [i for i in tabl]
 
-    font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
-    font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
-    for font in font_dirs:
-        matplotlib.font_manager.fontManager.addfont(font)
-    matplotlib.rcParams["font.family"] = 'arial'
+    # font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
+    # font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
+    # for font in font_dirs:
+    #     matplotlib.font_manager.fontManager.addfont(font)
+    matplotlib.rcParams["font.family"] = kwargs["FONT_FAMILY"]
 
     if bunch.includefp == True:
         fp_color_num = samplename_dict[bunch.fp_index]

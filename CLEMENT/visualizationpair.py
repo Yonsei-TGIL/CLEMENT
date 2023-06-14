@@ -7,19 +7,19 @@ import extract
 from sklearn.decomposition import TruncatedSVD, PCA
 
 
-def drawfigure_1d(membership1, sample_dict_rev, membership2, mixture2, output_filename, np_vaf):
+def drawfigure_1d(membership1, sample_dict_rev, membership2, mixture2, output_filename, np_vaf, **kwargs):
     vivid_10 = palettable.cartocolors.qualitative.Vivid_10.mpl_colors
     bdo = palettable.lightbartlein.diverging.BlueDarkOrange18_18.mpl_colors
     tabl = palettable.tableau.Tableau_20.mpl_colors
     Gr_10 = palettable.scientific.sequential.GrayC_20.mpl_colors
     colorlist = [i for i in tabl]
 
-    font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
-    font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
-    for font in font_dirs:
-        matplotlib.font_manager.fontManager.addfont(font)
+    # font_dir = "/home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/"
+    # font_dirs = matplotlib.font_manager.findSystemFonts(fontpaths=font_dir, fontext='ttf')
+    # for font in font_dirs:
+    #     matplotlib.font_manager.fontManager.addfont(font)
     
-    matplotlib.rcParams["font.family"] = 'arial'
+    matplotlib.rcParams["font.family"] = kwargs["FONT_FAMILY"]
 
 
     maxmaxmax_NUM_CLONE = np.max(membership2) + 1

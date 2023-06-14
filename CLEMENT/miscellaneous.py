@@ -323,11 +323,13 @@ def VAFdensitogram (np_vaf, output_suptitle, output_filename,  **kwargs):
 
 
 
-def drawfigure (np_vaf, membership, output_filename):
+def drawfigure (np_vaf, membership, output_filename, **kwargs):
     import palettable
     import matplotlib
     import numpy as np
     import seaborn as sns
+
+    matplotlib.rcParams["font.family"] =  kwargs["FONT_FAMILY"]
 
     tabl = palettable.tableau.Tableau_20.mpl_colors
     colorlist = [i for i in tabl]
@@ -461,7 +463,7 @@ def decision_gapstatistics (cluster, np_vaf, **kwargs):
 
                 kmeans.fit(reference_np)  # nparray
                 Wkb_list.append ( round (math.log10(kmeans.inertia_), 3) )
-                drawfigure (reference_np, kmeans.labels_,  kwargs["CLEMENT_DIR"] + "/Kmeans/Kmeans.clone"  +   str (NUM_CLONE) + "." + str(b) + ".jpg")
+                drawfigure (reference_np, kmeans.labels_,  kwargs["CLEMENT_DIR"] + "/Kmeans/Kmeans.clone"  +   str (NUM_CLONE) + "." + str(b) + ".jpg", **kwargs)
 
             Gap_list [NUM_CLONE] = round ( np.mean(Wkb_list) - Wk, 3)
             Std_list [NUM_CLONE] = round ( np.std (Wkb_list), 3)

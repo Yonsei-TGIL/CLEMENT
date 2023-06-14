@@ -1,6 +1,6 @@
 NUM_CLONE	4
 NUM_CHILD	3
-runningtime	77
+runningtime	69
 FPexistence	True
 FPindex	1
 makeone_index	[0, 3, 4]

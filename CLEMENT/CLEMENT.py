@@ -31,6 +31,7 @@ def main():
     parser.add_argument('--RANDOM_SEED', type=int, default=1,  help="random_seed for regular random sampling")
     parser.add_argument('--MAKEONE_STRICT', type=int,  choices=[1, 2], default = 1, help="1:strict, 2:lenient. Default : 1")
     parser.add_argument('--TN_CONFIDENTIALITY', default=0.995, type=float, help="Confidentiality that negative being negative (TN). Recommendation : > 0.99. Default : 0.995")
+    parser.add_argument('--FONT_FAMILY', type=str, default="arial", help="Font family that displayed in the plots")
     parser.add_argument('--VERBOSE', type=int, choices=[0, 1, 2, 3], default=2, help="0: Verbose, 3: Concise. Default : 2")
 
 
@@ -51,6 +52,7 @@ def main():
     kwargs["RANDOM_SEED"] = int(args.RANDOM_SEED)
     kwargs["SCORING"] = False
     kwargs["MAKEONE_STRICT"] = int(args.MAKEONE_STRICT)
+    kwargs["FONT_FAMILY"] = str(args.FONT_FAMILY)
     kwargs["CLEMENT_DIR"] = args.CLEMENT_DIR
     if kwargs["CLEMENT_DIR"][-1] == "/":
         kwargs["CLEMENT_DIR"] = kwargs["CLEMENT_DIR"][0:-1]
@@ -95,11 +97,11 @@ def main():
 
         if kwargs["NUM_BLOCK"] == 1:
             x_median = miscellaneous.VAFdensitogram(np_vaf, "INPUT DATA", kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", **kwargs)
-            visualizationsingle.drawfigure_1d(membership_answer_numerical, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_NumToCharacter, False, -1, list (set (membership_answer_numerical)))
+            visualizationsingle.drawfigure_1d(membership_answer_numerical, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_NumToCharacter, False, -1, list (set (membership_answer_numerical)), **kwargs)
         elif kwargs["NUM_BLOCK"] == 2:
-            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_CharacterToNum, False, -1)
+            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_CharacterToNum, False, -1, "None", **kwargs)
         elif kwargs["NUM_BLOCK"] >= 3:
-            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_CharacterToNum, False, -1, "SVD")
+            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_CharacterToNum, False, -1, "SVD", **kwargs)
         subprocess.run(["cp " + kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf  " +  kwargs["CLEMENT_DIR"] + "/candidate/0.inputdata.pdf"], shell=True)
         subprocess.run(["cp " + kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf  " +  kwargs["CLEMENT_DIR"] + "/trial/0.inputdata.pdf"], shell=True)
 
