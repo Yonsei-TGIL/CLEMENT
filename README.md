@@ -2,6 +2,7 @@
 - Genomic decomposition and reconstruction of **non-tumor** diploid subclones (2022)
 - CLonal decomposition via Expectation-Maximization algorithm established in Non-Tumor setting
 - Support multiple diploid sample
+- Biallelic variants (Homo, 1/1) can degrade the performance of CLEMENT.
 
 ## Overview of CLEMENT workflow and core algorithms
 <br/>
@@ -84,6 +85,8 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 
 ## Example
 	DIR=[YOUR_DIRECTORY]
+
+	# Example 1
 	CLEMENT \
 		--INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" \
 		--CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6"  \
@@ -91,6 +94,13 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 		--NUM_CLONE_TRIAL_END 6 \
 		--RANDOM_PICK 500
 	
+	# Example 2
+	CLEMENT \
+		--INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-7/M1-5_M1-7_input.txt" \
+		--CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-7"  \
+		--NUM_CLONE_TRIAL_START 2 \
+		--NUM_CLONE_TRIAL_END 6
+		
 
 
 ![CLEMENT_example](https://github.com/Yonsei-TGIL/CLEMENT/assets/56012432/36dbbd01-0926-4802-8b3e-d91b9fbc7d57)
@@ -98,3 +108,5 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 
 ## Contact
 	goldpm1@yuhs.ac
+
+

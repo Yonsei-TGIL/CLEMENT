@@ -4,11 +4,13 @@ def main():
     import numpy as np
     import pandas as pd
 
-    print ( "Package directory : {}".format (  os.path.dirname(__file__) ) )
+    print ( "Package directory : {}\n".format (  os.path.dirname(__file__) ) )
     if os.path.dirname(__file__) not in sys.path:
        sys.path.append  ( os.path.dirname(__file__) )
        
     import EMhard, EMsoft, Estep, Mstep, Bunch, miscellaneous, datapreparation, phylogeny, visualizationsingle, visualizationsinglesoft, filetype
+    
+    #python3 CLEMENT.py	--INPUT_TSV "/data/project/Alzheimer/YSscript/EM_MRS/Packaging/CLEMENT/example/2.CellData/MRS_2D/M1-5_M1-7/M1-5_M1-7_input.txt"  --CLEMENT_DIR "/data/project/Alzheimer/YSscript/EM_MRS/Packaging/CLEMENT/example/2.CellData/MRS_2D/M1-5_M1-7"  		--NUM_CLONE_TRIAL_START 2 		--NUM_CLONE_TRIAL_END 6  --RANDOM_PICK 500
 
 
     pd.options.mode.chained_assignment = None
@@ -16,8 +18,8 @@ def main():
     kwargs = {}
 
     parser = argparse.ArgumentParser(description='The below is usage direction.')
-    parser.add_argument('--INPUT_TSV', type=str, default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8/M1-3_M1-8_input.txt",  help="Path where TSV format file locate. (Important : DIRECTORY (X), File path (O) )")
-    parser.add_argument('--CLEMENT_DIR', default="/data/project/Alzheimer/YSscript/EM_MRS/CLEMENT/example/2.CellData/MRS_2D/M1-3_M1-8",   help="Directory where input and output of CLEMENT deposits (Important : DIRECTORY (O), File path (X) )")
+    parser.add_argument('--INPUT_TSV', type=str, default="",  help="Path where TSV format file locate. (Important : DIRECTORY (X), File path (O) )")
+    parser.add_argument('--CLEMENT_DIR', default="",   help="Directory where input and output of CLEMENT deposits (Important : DIRECTORY (O), File path (X) )")
     parser.add_argument('--MODE', type=str, choices=["Hard", "Both"], default="Both", help="Selection of clustering method. Default : Both")
     parser.add_argument('--RANDOM_PICK', type=int, default=-1,  help="The number of mutations to alleviate the computational load. Default : -1 (load the whole data)")
     parser.add_argument('--KMEANS_CLUSTERNO',  type=int, default=8,  choices=range(5, 20), help="Number of initial K-means cluster. Recommendation : 5~8 for one-sample, 8-15 for larger-sample. Default : 8")
@@ -81,8 +83,6 @@ def main():
 
     inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, samplename_dict_CharacterToNum, kwargs  = datapreparation.main( **kwargs)
 
-    print (kwargs["RANDOM_PICK"])
-
     membership_answer_numerical = np.zeros( kwargs["RANDOM_PICK"], dtype="int")
     membership_answer_numerical_nofp_index = []
 
@@ -142,7 +142,8 @@ def main():
                     print("\t\tstep #{} ( = TOTAL step #{})".format(kwargs["STEP"], kwargs["STEP_TOTAL"]) )
 
                     step_soft = Estep.main(df, np_vaf, np_BQ, step_soft, **kwargs)               # E step
-                    print ( "\t\t\tAfter the E step: {}\tmakeone_index : {}".format( np.unique(step_soft.membership  , return_counts=True), step_soft.makeone_index ) )
+                    #print ( "\t\t\tAfter the E step : {}\tmakeone_index : {}".format( np.unique(step_soft.membership  , return_counts=True), step_soft.makeone_index ) )
+                    print ( "\t\t\tAfter the E step : fp_index {}\tmakeone_index : {}".format( step_soft.fp_index, step_soft.makeone_index ) )
                     step_soft = Mstep.main(df, np_vaf, np_BQ, step_soft, "Soft", **kwargs)     # M step
                     print("\t\t\tAfter the M step : fp_index {}\tmakeone_index {}\tlikelihood : {}".format( step_soft.fp_index, step_soft.makeone_index, round (step_soft.likelihood, 1), step_soft.mixture ))
 
@@ -242,13 +243,14 @@ def main():
             
             print ( "NUM_CLONE_hard (by order): {}".format(NUM_CLONE_hard))
 
-            if cluster_soft.mixture_record [ NUM_CLONE_hard[i] ] == []:
+            if cluster_soft.mixture_record [ NUM_CLONE_hard[i] ] == []: # When soft clustering was unavailable
                 if (priority == "1st") & (kwargs["MODE"] in ["Both"]):
+                    DECISION = "hard_1st"
                     print ("DECISION\t{}".format(DECISION))
                     with open (kwargs["CLEMENT_DIR"] + "/result/CLEMENT_hard_vs_fuzzy.txt", "w", encoding = "utf8") as output_hard_vs_fuzzy:
                         print ("DECISION\t{}".format(DECISION) , file = output_hard_vs_fuzzy )            
                 
-            else:
+            else: # Most of the case
                 if (priority == "1st") &  (kwargs["MODE"] in ["Both"]):
                     moved_col_list = miscellaneous.movedcolumn ( cluster_hard, cluster_soft,  NUM_CLONE_hard[i]  )
                     hard_std = np.std(  cluster_hard.mixture_record [ NUM_CLONE_hard[i] ] [ : , moved_col_list ]   )
@@ -276,6 +278,23 @@ def main():
                         print ( "Soft (n = {}) : std = {}\tstep = {}\nhard_mixture = {}".format( cluster_soft.mixture_record [NUM_CLONE_hard[i]].shape[1],  round( soft_std, 3) ,  cluster_soft.stepindex_record [ NUM_CLONE_hard[i] ],  cluster_soft.mixture_record [ NUM_CLONE_hard[i] ]   )  , file = output_hard_vs_fuzzy )
                         print ( "ratio : {}".format ( round(soft_std, 3) / round(hard_std, 3) ), file = output_hard_vs_fuzzy )
                         print ("\nsoft 선택 기준 :  < {}\nDECISION\t{}".format(kwargs["DECISION_STANDARD"], DECISION) , file = output_hard_vs_fuzzy )
+
+                
+                ###################################### PHYLOGENY RECONSTRUCTION #######################################
+                if len (cluster_hard.makeone_index_record [NUM_CLONE_hard[i]]) + int ( cluster_hard.includefp_record [NUM_CLONE_hard[i]])  < NUM_CLONE_hard[i]:    # ISPARENT == TRUE
+                    print ("\n\n\t▶▶▶  PHYLOGENY RECONSTRUCTION IN HARD CLUSTERING ◀◀◀")
+                    kwargs["PHYLOGENY_DIR"] = kwargs["CLEMENT_DIR"] + "/CLEMENT_hard_" + priority + ".phylogeny.txt"
+                    f = io.StringIO()
+                    with contextlib.redirect_stdout(f):
+                        membership_child = set ( cluster_hard.makeone_index_record[ NUM_CLONE_hard[i] ] )            # Pick child index only ( e.g.  0, 1, 3)
+                        membership_outside = set (range (0, NUM_CLONE_hard [i] )) - membership_child - set ( [cluster_hard.fp_index_record[ NUM_CLONE_hard[i] ] ] )   # Pick possible parent index only (e.g. 2)
+
+                        g = phylogeny.main(membership_child, membership_outside, cluster_hard.mixture_record[ NUM_CLONE_hard[i] ],  **kwargs)
+
+                    print ( f.getvalue() )    # Print in command line
+                    with open ( kwargs["PHYLOGENY_DIR"] , "w", encoding = "utf8") as phylogeny_file:   # Print in separate file
+                        print (f.getvalue(), file = phylogeny_file)
+                    #########################################################################################################
 
 
 

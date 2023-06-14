@@ -1,0 +1,11 @@
+NUM_CLONE == 5
+	includefp = True (fp_index = 1)		-> 462
+	My Clustering	Wk  : 0.911
+	Random noise (B = 20) : 	mean Wkb = 1.09	sdk = 0.017	sk (sdk * sqrt (21)) = 0.078
+	Gap (Wkb - Wk) = 0.179
+	Posterior = -1301
+Gap list : [0.179]
+S list : [0.078]
+
+Gap statistics method (max Gap): 1th optimal NUM_CLONE = 5
+

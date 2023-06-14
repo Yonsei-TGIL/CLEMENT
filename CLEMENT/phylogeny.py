@@ -64,19 +64,19 @@ def main (membership_child, membership_parent, mixture_total, **kwargs):
         subset_mixture_acc.remove(subset_mixture_maxmax)
         sum_mixture_acc.remove(sum_mixture_maxmax)
 
-        print ("parent No = {0}, parent_mixture = {1}, sum_mixture = {2}, subset_list = {3},  p = {4}".format(j_maxmax,  mixture_total[:,j_maxmax], sum_mixture_maxmax, subset_list_maxmax, p_maxmax ), file = output_file )
-        print ("parent No = {0}, parent_mixture = {1}, sum_mixture = {2}, subset_list = {3},  p = {4}".format(j_maxmax,  mixture_total[:,j_maxmax], sum_mixture_maxmax, subset_list_maxmax, p_maxmax ) )
+        print ("\t\tparent No = {0}, parent_mixture = {1}, sum_mixture = {2}, subset_list = {3},  p = {4}".format(j_maxmax,  mixture_total[:,j_maxmax], np.round(sum_mixture_maxmax, 2), subset_list_maxmax, round (p_maxmax, 2) ), file = output_file )
+        print ("\t\tparent No = {0}, parent_mixture = {1}, sum_mixture = {2}, subset_list = {3},  p = {4}".format(j_maxmax,  mixture_total[:,j_maxmax], np.round(sum_mixture_maxmax, 2), subset_list_maxmax, round (p_maxmax, 2) ) )
         g.intervene (j_maxmax, subset_list_maxmax)           
         for proband_clone_index in subset_list_maxmax:      # 4 -6,  4- 7
             g.addEdge(j_maxmax, proband_clone_index)
 
-    print ("", file = output_file)
-    print ("")
+    print ("\t\t", file = output_file)
+    print ("\t\t")
     for root in completed_parent:
         if g.findparent(root) == "None":   # Run only if root node
             g.dfs(root, kwargs["PHYLOGENY_DIR"])
-        print ("", file = output_file)
-        print ("")
+        print ("\t\t", file = output_file)
+        print ("\t\t")
 
 
     output_file.close()

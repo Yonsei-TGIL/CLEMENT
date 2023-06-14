@@ -61,7 +61,7 @@ def main ( df, np_vaf, np_BQ, mixture_kmeans, **kwargs):
             trial_index, failure_num = 0, 0
             while trial_index < kwargs["TRIAL_NO"]:
                 kwargs["TRIAL"] = trial_index
-                print("\t#Trial #{0}".format(trial_index))
+                print("\tTrial #{0}".format(trial_index))
 
                 step = Bunch.Bunch1(NUM_MUTATION , NUM_BLOCK, NUM_CLONE, kwargs["STEP_NO"])
 
@@ -81,7 +81,7 @@ def main ( df, np_vaf, np_BQ, mixture_kmeans, **kwargs):
                 for step_index in range(0, kwargs["STEP_NO"]):
                     kwargs["STEP"], kwargs["STEP_TOTAL"] = step_index, step_index
                     kwargs["OPTION"] = "hard"
-                    print ("\t\t# Step #{}".format(step_index))
+                    print ("\t\tStep #{}".format(step_index))
 
                     step = Estep.main(df, np_vaf, np_BQ, step, **kwargs)  
                     
@@ -148,7 +148,7 @@ def main ( df, np_vaf, np_BQ, mixture_kmeans, **kwargs):
                     trial_index = trial_index + 1
                 
             i =  trial.find_max_likelihood(0, kwargs["TRIAL_NO"]) 
-            print ("\n\n\tChose {}th trial, {}th step\n\t(trial.likelihood_record : {})\n\tFP_index : {}\n\tlen(fp_member_index) : {}".format(i, trial.max_step_index_record[i], np.round ( trial.likelihood_record ), trial.fp_index_record[i],  len (trial.fp_member_index_record[i] ) ) )
+            print ("\n\n\tIn NUM_CLONE = {}, we chose {}th trial, {}th step\n\t(trial.likelihood_record : {})\n\tFP_index : {}\n\tlen(fp_member_index) : {}".format(NUM_CLONE, i, trial.max_step_index_record[i], np.round ( trial.likelihood_record ), trial.fp_index_record[i],  len (trial.fp_member_index_record[i] ) ) )
 
             if trial.max_step_index_record [i]  != -1:   # If unavailable in this trial
                 os.system ("cp " + kwargs["CLEMENT_DIR"] + "/trial/clone" + str (kwargs["NUM_CLONE"]) + "." + str( i ) + "-"  + str(  trial.max_step_index_record [i]  ) + "\(hard\).pdf" + " " + 

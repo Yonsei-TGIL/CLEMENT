@@ -1,6 +1,0 @@
-NUM_CLONE	3
-NUM_CHILD	3
-runningtime	155
-FPexistence	False
-FPindex	-1
-makeone_index	[0, 1, 2]

@@ -1,0 +1,8 @@
+
+
+		parent No = 2, parent_mixture = [0.92 0.93], sum_mixture = [0.91 0.93], subset_list = [0, 3],  p = -2.5
+		
+2 → 0
+2 → 3
+		
+
