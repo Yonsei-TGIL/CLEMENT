@@ -103,7 +103,8 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 		
 
 
-![CLEMENT_example](https://github.com/Yonsei-TGIL/CLEMENT/assets/56012432/36dbbd01-0926-4802-8b3e-d91b9fbc7d57)
+![example1](https://github.com/Yonsei-TGIL/CLEMENT/assets/56012432/a5a6beb2-e0ac-44ad-8a5a-1b9aa4480010)
+![example2](https://github.com/Yonsei-TGIL/CLEMENT/assets/56012432/3ee2c4a3-4627-40a3-80e6-666a981a6c20)
 <br/>
 
 ## Contact
