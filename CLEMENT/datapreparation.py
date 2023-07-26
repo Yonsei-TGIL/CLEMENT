@@ -124,6 +124,7 @@ def random_pick_fun(**kwargs):
             samplename_dict_CharacterToNum[k] = cnt
             cnt = cnt + 1
     
+    kwargs["samplename_dict_CharacterToNum"] = samplename_dict_CharacterToNum
 
     return kwargs
 
@@ -137,4 +138,4 @@ def main (**kwargs):
     
     kwargs = random_pick_fun(**kwargs)
 
-    return (inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, samplename_dict_CharacterToNum, kwargs )
+    return (inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, kwargs )

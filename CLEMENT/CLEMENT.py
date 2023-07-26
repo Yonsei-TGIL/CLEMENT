@@ -31,7 +31,7 @@ def main():
     parser.add_argument('--RANDOM_SEED', type=int, default=1,  help="random_seed for regular random sampling")
     parser.add_argument('--MAKEONE_STRICT', type=int,  choices=[1, 2], default = 1, help="1:strict, 2:lenient. Default : 1")
     parser.add_argument('--TN_CONFIDENTIALITY', default=0.995, type=float, help="Confidentiality that negative being negative (TN). Recommendation : > 0.99. Default : 0.995")
-    parser.add_argument('--FONT_FAMILY', type=str, default="arial", help="Font family that displayed in the plots")
+    parser.add_argument('--FONT_FAMILY', type=str, default="arial", help="Font family that displayed in the plots. Default : arial")
     parser.add_argument('--VERBOSE', type=int, choices=[0, 1, 2, 3], default=2, help="0: Verbose, 3: Concise. Default : 2")
 
 
@@ -83,7 +83,7 @@ def main():
     # membership_answer: ['V1', 'V2', 'FP', 'S0', 'V2', 'S0', 'V2', ....
     # membership_answer_numerical : [0 1 2 3 1 3 1 ...
 
-    inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, samplename_dict_CharacterToNum, kwargs  = datapreparation.main( **kwargs)
+    inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, kwargs  = datapreparation.main( **kwargs)
 
     membership_answer_numerical = np.zeros( kwargs["RANDOM_PICK"], dtype="int")
     membership_answer_numerical_nofp_index = []
@@ -91,17 +91,17 @@ def main():
 
 
     if type(inputdf) != type(False):
-        samplename_dict_NumToCharacter = {v: k for k, v in samplename_dict_CharacterToNum.items()}   # {0: 'FP', 1: 'V2', 2: 'S0', 3: 'V1'}
+        kwargs["samplename_dict_NumToCharacter"]= {v: k for k, v in kwargs["samplename_dict_CharacterToNum"].items()}   # {0: 'FP', 1: 'V2', 2: 'S0', 3: 'V1'}
 
-        print ("samplename_dict_CharacterToNum = {}\nsamplename_dict_NumToCharacter = {}".format( samplename_dict_CharacterToNum, samplename_dict_NumToCharacter ))
+        print ("samplename_dict_CharacterToNum = {}\nsamplename_dict_NumToCharacter= {}".format( kwargs["samplename_dict_CharacterToNum"], kwargs["samplename_dict_NumToCharacter"]))
 
         if kwargs["NUM_BLOCK"] == 1:
             x_median = miscellaneous.VAFdensitogram(np_vaf, "INPUT DATA", kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", **kwargs)
             visualizationsingle.drawfigure_1d(membership_answer_numerical, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_NumToCharacter, False, -1, list (set (membership_answer_numerical)), **kwargs)
         elif kwargs["NUM_BLOCK"] == 2:
-            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_CharacterToNum, False, -1, "None", **kwargs)
+            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, kwargs["samplename_dict_CharacterToNum"], False, -1, "None", **kwargs)
         elif kwargs["NUM_BLOCK"] >= 3:
-            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_CharacterToNum, False, -1, "SVD", **kwargs)
+            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, kwargs["samplename_dict_CharacterToNum"], False, -1, "SVD", **kwargs)
         subprocess.run(["cp " + kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf  " +  kwargs["CLEMENT_DIR"] + "/candidate/0.inputdata.pdf"], shell=True)
         subprocess.run(["cp " + kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf  " +  kwargs["CLEMENT_DIR"] + "/trial/0.inputdata.pdf"], shell=True)
 

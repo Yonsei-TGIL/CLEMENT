@@ -32,10 +32,10 @@
 3. pip3 install CLEMENTDNA   
 
 ## Version update
-1.0.2 (June 13th, 2023)
+1.0.4 (June 14h, 2023)
 
 ## Input format
-As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input file is shown in _"example"_ directory.
+As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input file is shown in _"example"_ directory.
 - 1st column: mutation ID (CHR_POS is recommended)
 - 2nd column: label (answer), if possible. If user don't know the label (answer), just set 0
 - 3rd column: **Depth1,Alt1,Depth2,Alt2....,Depth_n,Alt_n**    * should be comma-separated, and no space permitted
@@ -69,7 +69,7 @@ As now of 1.0.2, CLEMENT only supports standardized TSV input. Examples of input
 		--TN_CONFIDENTIALITY  	Confidentiality that negative being negative (TN). Recommendation : > 0.99. (default : 0.995)
 
 	Miscelleneous
-		--FONT_FAMILY	Font family that displayed in the plots (default : "arial")
+		--FONT_FAMILY		Font family that displayed in the plots (default : "arial")
 		--VERBOSE			0: no record,  1: simplified record,  2: verbose record (default: 2)
 
 
