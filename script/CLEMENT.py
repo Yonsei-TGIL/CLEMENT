@@ -32,6 +32,7 @@ def main():
     parser.add_argument('--MAKEONE_STRICT', type=int,  choices=[1, 2], default = 1, help="1:strict, 2:lenient. Default : 1")
     parser.add_argument('--TN_CONFIDENTIALITY', default=0.995, type=float, help="Confidentiality that negative being negative (TN). Recommendation : > 0.99. Default : 0.995")
     parser.add_argument('--FONT_FAMILY', type=str, default="arial", help="Font family that displayed in the plots. Default : arial")
+    parser.add_argument('--IMAGE_FORMAT', type=str, default="jpg", choices = ["jpg", "pdf"], help="Image format that displayed in the plots. Default : jpg")
     parser.add_argument('--VERBOSE', type=int, choices=[0, 1, 2, 3], default=2, help="0: Verbose, 3: Concise. Default : 2")
 
 
@@ -42,7 +43,7 @@ def main():
     kwargs["MODE"] = args.MODE
     kwargs["NUM_CLONE_TRIAL_START"], kwargs["NUM_CLONE_TRIAL_END"] = args.NUM_CLONE_TRIAL_START, args.NUM_CLONE_TRIAL_END
     kwargs["RANDOM_PICK"] = int(args.RANDOM_PICK)
-    kwargs["NUM_MUTATION"] = kwargs["RANDOM_PICK"]
+    
     kwargs["MAXIMUM_NUM_PARENT"] = int(args.MAXIMUM_NUM_PARENT)
     kwargs["TN_CONFIDENTIALITY"] = args.TN_CONFIDENTIALITY
     kwargs["TRIAL_NO"] = int(args.TRIAL_NO)
@@ -53,9 +54,11 @@ def main():
     kwargs["SCORING"] = False
     kwargs["MAKEONE_STRICT"] = int(args.MAKEONE_STRICT)
     kwargs["FONT_FAMILY"] = str(args.FONT_FAMILY)
+    kwargs["IMAGE_FORMAT"] = str(args.IMAGE_FORMAT)
     kwargs["CLEMENT_DIR"] = args.CLEMENT_DIR
     if kwargs["CLEMENT_DIR"][-1] == "/":
         kwargs["CLEMENT_DIR"] = kwargs["CLEMENT_DIR"][0:-1]
+        
     kwargs["method"] = "gap+normal"
     kwargs["adjustment"] = "half"
     kwargs["STEP_NO"] = 30
@@ -84,6 +87,7 @@ def main():
     # membership_answer_numerical : [0 1 2 3 1 3 1 ...
 
     inputdf, df, np_vaf, np_BQ, membership_answer, mutation_id, kwargs  = datapreparation.main( **kwargs)
+    kwargs["NUM_MUTATION"] = NUM_MUTATION = kwargs["RANDOM_PICK"]
 
     membership_answer_numerical = np.zeros( kwargs["RANDOM_PICK"], dtype="int")
     membership_answer_numerical_nofp_index = []
@@ -96,21 +100,21 @@ def main():
         print ("samplename_dict_CharacterToNum = {}\nsamplename_dict_NumToCharacter= {}".format( kwargs["samplename_dict_CharacterToNum"], kwargs["samplename_dict_NumToCharacter"]))
 
         if kwargs["NUM_BLOCK"] == 1:
-            x_median = miscellaneous.VAFdensitogram(np_vaf, "INPUT DATA", kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", **kwargs)
-            visualizationsingle.drawfigure_1d(membership_answer_numerical, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, samplename_dict_NumToCharacter, False, -1, list (set (membership_answer_numerical)), **kwargs)
+            x_median = miscellaneous.VAFdensitogram(np_vaf, "INPUT DATA", kwargs["CLEMENT_DIR"] + "/0.inputdata." + kwargs["IMAGE_FORMAT"], **kwargs)
+            visualizationsingle.drawfigure_1d(membership_answer_numerical, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata." + kwargs["IMAGE_FORMAT"], np_vaf, kwargs["samplename_dict_NumToCharacter"], False, -1, list (set (membership_answer_numerical)), **kwargs)
         elif kwargs["NUM_BLOCK"] == 2:
-            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, kwargs["samplename_dict_CharacterToNum"], False, -1, "None", **kwargs)
+            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata." + kwargs["IMAGE_FORMAT"], np_vaf, kwargs["samplename_dict_CharacterToNum"], False, -1, "None", **kwargs)
         elif kwargs["NUM_BLOCK"] >= 3:
-            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf", np_vaf, kwargs["samplename_dict_CharacterToNum"], False, -1, "SVD", **kwargs)
-        subprocess.run(["cp " + kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf  " +  kwargs["CLEMENT_DIR"] + "/candidate/0.inputdata.pdf"], shell=True)
-        subprocess.run(["cp " + kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf  " +  kwargs["CLEMENT_DIR"] + "/trial/0.inputdata.pdf"], shell=True)
+            visualizationsingle.drawfigure_2d(membership_answer, "ANSWER_SET (n={})".format(kwargs["RANDOM_PICK"]), kwargs["CLEMENT_DIR"] + "/0.inputdata." + kwargs["IMAGE_FORMAT"], np_vaf, kwargs["samplename_dict_CharacterToNum"], False, -1, "SVD", **kwargs)
+        subprocess.run(["cp " + kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf  " +  kwargs["CLEMENT_DIR"] + "/candidate/0.inputdata." + kwargs["IMAGE_FORMAT"]], shell=True)
+        subprocess.run(["cp " + kwargs["CLEMENT_DIR"] + "/0.inputdata.pdf  " +  kwargs["CLEMENT_DIR"] + "/trial/0.inputdata." + kwargs["IMAGE_FORMAT"]], shell=True)
 
 
     START_TIME = datetime.datetime.now()
 
 
     np_vaf = miscellaneous.np_vaf_extract(df)
-    mixture_kmeans, kwargs["KMEANS_CLUSTERNO"] = miscellaneous.initial_kmeans (np_vaf, kwargs["KMEANS_CLUSTERNO"], kwargs["CLEMENT_DIR"] + "/trial/0.inqitial_kmeans.pdf")  
+    mixture_kmeans, kwargs["KMEANS_CLUSTERNO"] = miscellaneous.initial_kmeans (np_vaf, kwargs["KMEANS_CLUSTERNO"], kwargs["CLEMENT_DIR"] + "/trial/0.inqitial_kmeans." + kwargs["IMAGE_FORMAT"])  
 
     cluster_hard = Bunch.Bunch2(**kwargs)
     cluster_soft = Bunch.Bunch2(**kwargs)
@@ -172,7 +176,7 @@ def main():
                     print ("\t\t\tNot available this clone")
 
                 else:  # (Most of the case) Available 
-                    os.system ("cp " + kwargs["CLEMENT_DIR"] + "/trial/clone" + str (kwargs["NUM_CLONE"]) + "." + str( kwargs["TRIAL"] ) + "-"  + str(step_soft.max_step_index  + cluster_hard.stepindex_record [ NUM_CLONE ] - 1) + "\(soft\).pdf" + "  " + kwargs["CLEMENT_DIR"] + "/candidate/clone" + str (kwargs["NUM_CLONE"])  + ".\(soft\).pdf"  )
+                    os.system ("cp " + kwargs["CLEMENT_DIR"] + "/trial/clone" + str (kwargs["NUM_CLONE"]) + "." + str( kwargs["TRIAL"] ) + "-"  + str(step_soft.max_step_index  + cluster_hard.stepindex_record [ NUM_CLONE ] - 1) + "\(soft\)." + kwargs["IMAGE_FORMAT"] + "  " + kwargs["CLEMENT_DIR"] + "/candidate/clone" + str (kwargs["NUM_CLONE"])  + ".\(soft\)." + kwargs["IMAGE_FORMAT"]  )
                     cluster_soft.acc ( step_soft.mixture_record [i], step_soft.membership_record [i], step_soft.likelihood_record [i], step_soft.membership_p_record [i], step_soft.membership_p_normalize_record [i], step_soft.stepindex_record[i], cluster_hard.trialindex, step_soft.max_step_index_record[i], step_soft.makeone_index_record[i], step_soft.fp_index_record[i], step_soft.includefp_record[i], step_soft.fp_involuntary_record[i], step_soft.fp_member_index_record[i]   ,**kwargs )
 
 
@@ -312,7 +316,7 @@ def main():
             samplename_dict = {k:k for k in range(0, np.max(cluster_hard.membership_record [NUM_CLONE_hard[i]])+ 1)}
 
 
-            subprocess.run (["cp -rf " + kwargs["CLEMENT_DIR"] + "/candidate/clone" + str(NUM_CLONE_hard[i]) +".\(hard\).pdf " + kwargs["CLEMENT_DIR"]+  "/result/CLEMENT_hard_" + priority + ".pdf"], shell = True)
+            subprocess.run (["cp -rf " + kwargs["CLEMENT_DIR"] + "/candidate/clone" + str(NUM_CLONE_hard[i]) +".\(hard\).pdf " + kwargs["CLEMENT_DIR"]+  "/result/CLEMENT_hard_" + priority + "." + kwargs["IMAGE_FORMAT"]], shell = True)
             print ("\n→ Hard {} results printed".format(priority))
                 
 
@@ -346,15 +350,15 @@ def main():
 
             if kwargs["NUM_BLOCK"] == 1:
                 visualizationsinglesoft.drawfigure_1d (cluster_soft.membership_record [NUM_CLONE_soft[i]], cluster_soft.mixture_record [NUM_CLONE_soft[i]], cluster_soft.membership_p_normalize_record [NUM_CLONE_soft[i]],
-                                                                        "CLEMENT_soft : {}".format( round (cluster_soft.likelihood_record [NUM_CLONE_soft[i]] ) ), kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_soft_" + priority + ".pdf", np_vaf, samplename_dict, cluster_soft.includefp_record [NUM_CLONE_soft[i]] , cluster_soft.fp_index_record[NUM_CLONE_soft[i]] , cluster_soft.makeone_index_record[NUM_CLONE_soft[i]] )
+                                                                        "CLEMENT_soft : {}".format( round (cluster_soft.likelihood_record [NUM_CLONE_soft[i]] ) ), kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_soft_" + priority + "." + kwargs["IMAGE_FORMAT"], np_vaf, samplename_dict, cluster_soft.includefp_record [NUM_CLONE_soft[i]] , cluster_soft.fp_index_record[NUM_CLONE_soft[i]] , cluster_soft.makeone_index_record[NUM_CLONE_soft[i]] )
             elif kwargs["NUM_BLOCK"] == 2:
                 visualizationsinglesoft.drawfigure_2d (cluster_soft.membership_record [NUM_CLONE_soft[i]], cluster_soft.mixture_record [NUM_CLONE_soft[i]], cluster_soft.membership_p_normalize_record [NUM_CLONE_soft[i]],
-                                                                        "CLEMENT_soft : {}".format( round (cluster_soft.likelihood_record [NUM_CLONE_soft[i]] ) ), kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_soft_" + priority + ".pdf", np_vaf, samplename_dict, cluster_soft.includefp_record [NUM_CLONE_soft[i]] , cluster_soft.fp_index_record[NUM_CLONE_soft[i]] , cluster_soft.makeone_index_record[NUM_CLONE_soft[i]] )
+                                                                        "CLEMENT_soft : {}".format( round (cluster_soft.likelihood_record [NUM_CLONE_soft[i]] ) ), kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_soft_" + priority + "." + kwargs["IMAGE_FORMAT"], np_vaf, samplename_dict, cluster_soft.includefp_record [NUM_CLONE_soft[i]] , cluster_soft.fp_index_record[NUM_CLONE_soft[i]] , cluster_soft.makeone_index_record[NUM_CLONE_soft[i]] )
             else:
                 visualizationsinglesoft.drawfigure_2d (cluster_soft.membership_record [NUM_CLONE_soft[i]], cluster_soft.mixture_record [NUM_CLONE_soft[i]], cluster_soft.membership_p_normalize_record [NUM_CLONE_soft[i]],
-                                                                        "CLEMENT_soft : {}".format( round (cluster_soft.likelihood_record [NUM_CLONE_soft[i]]) ), kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_soft_" + priority + ".pdf", np_vaf, samplename_dict, cluster_soft.includefp_record [NUM_CLONE_soft[i]] , cluster_soft.fp_index_record[NUM_CLONE_soft[i]] , cluster_soft.makeone_index_record[NUM_CLONE_soft[i]], "SVD" )
+                                                                        "CLEMENT_soft : {}".format( round (cluster_soft.likelihood_record [NUM_CLONE_soft[i]]) ), kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_soft_" + priority + "." + kwargs["IMAGE_FORMAT"], np_vaf, samplename_dict, cluster_soft.includefp_record [NUM_CLONE_soft[i]] , cluster_soft.fp_index_record[NUM_CLONE_soft[i]] , cluster_soft.makeone_index_record[NUM_CLONE_soft[i]], "SVD" )
 
-            subprocess.run (["cp -rf " + kwargs["CLEMENT_DIR"] + "/candidate/clone" + str(NUM_CLONE_soft[i]) +".\(soft\).pdf " + kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_soft_" + priority + ".pdf"], shell = True)
+            subprocess.run (["cp -rf " + kwargs["CLEMENT_DIR"] + "/candidate/clone" + str(NUM_CLONE_soft[i]) +".\(soft\).pdf " + kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_soft_" + priority + "." + kwargs["IMAGE_FORMAT"]], shell = True)
         
             print ("\n→ Soft {} results printed".format(priority))
 
@@ -378,7 +382,7 @@ def main():
             NUM_CHILD_CLEMENT = len (cluster_soft.makeone_index_record [NUM_CLONE_soft[0]])
             
 
-        subprocess.run ([ "cp -rf " +  kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_" + DECISION + ".pdf  " + kwargs["CLEMENT_DIR"]  + "/result/CLEMENT_decision.pdf" ], shell = True)
+        subprocess.run ([ "cp -rf " +  kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_" + DECISION + ".pdf  " + kwargs["CLEMENT_DIR"]  + "/result/CLEMENT_decision." + kwargs["IMAGE_FORMAT"] ], shell = True)
         subprocess.run ([ "cp -rf " +  kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_" + DECISION + ".results.txt  " + kwargs["CLEMENT_DIR"]  + "/result/CLEMENT_decision.results.txt" ], shell = True)
         subprocess.run ([ "cp -rf " +  kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_" + DECISION + ".membership.txt  " + kwargs["CLEMENT_DIR"]  + "/result/CLEMENT_decision.membership.txt" ], shell = True)
         subprocess.run ([ "cp -rf " +  kwargs["CLEMENT_DIR"]+ "/result/CLEMENT_" + DECISION + ".membership_count.txt  " + kwargs["CLEMENT_DIR"]  + "/result/CLEMENT_decision.membership_count.txt" ], shell = True)

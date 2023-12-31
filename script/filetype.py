@@ -15,4 +15,15 @@ def main (INPUT_TSV):
             elif len(line.split("\t")) == 3:  # If 4th column (BQ) is absent
                 NUM_BLOCK = int(len(line.split("\t")[-1].split(",")) / 2)
         return INPUT_FILETYPE, NUM_BLOCK
+
+def sexdetermination (INPUT_TSV):
+    import pandas as pd
+    inputdf = pd.read_csv(INPUT_TSV, sep = "\t")
+    contains_y = bool ( inputdf.iloc[:, 0].str.contains('Y').any() )
+    
+    if contains_y == True:
+        return "M"
+    else:
+        return "F"
+
     
