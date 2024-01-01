@@ -334,8 +334,8 @@ def initial_kmeans (input_containpos, df, np_vaf, np_BQ, OUTPUT_FILENAME, **kwar
             kwargs_transfer["NUM_PARENT"] = 0
             kwargs_transfer["NUM_BLOCK"] = len(nonzero_dim)
             kwargs_transfer["MAXIMUM_NUM_PARENT"] = 0
-            kwargs_transfer["TRIAL_NO"] = 10
-            kwargs_transfer["VERBOSE"] = 0
+            kwargs_transfer["TRIAL_NO"] = 5
+            kwargs_transfer["VERBOSE"] = 1
             kwargs_transfer["CLEMENTREC_DIR"] = kwargs["CLEMENT_DIR"] + "/" + str(subdim)
             kwargs_transfer["DEBUG"] = True
             input_containpos = input_containpos.reset_index(drop = True) 
@@ -350,7 +350,7 @@ def initial_kmeans (input_containpos, df, np_vaf, np_BQ, OUTPUT_FILENAME, **kwar
                                                     index_interest = index_interest, index_interest_nonzero = index_interest_nonzero,
                                                     kwargs = kwargs_transfer)
     
-            subprocess.run ([ "cp -rf " +  kwargs_transfer["CLEMENTREC_DIR"] + " " +  kwargs["COMBINED_OUTPUT_DIR"] + "/" + str(subdim) ], shell = True)
+            #subprocess.run ([ "cp -rf " +  kwargs_transfer["CLEMENTREC_DIR"] + " " +  kwargs["COMBINED_OUTPUT_DIR"] + "/" + str(subdim) ], shell = True)
 
             # 원래 차원으로 회복시키고 mixture를 합쳐주기
             if np.all(mixture_recursive == 0) != True:     # 전체가 (0,0)이면 무시하자 (FP는 어차피 나중에 한번에 붙여줌)
@@ -368,8 +368,8 @@ def initial_kmeans (input_containpos, df, np_vaf, np_BQ, OUTPUT_FILENAME, **kwar
             # 흔적 지워주기
             subprocess.run (["rm -rf " + kwargs["CLEMENT_DIR"] + "/trial/*"  ], shell = True)
             subprocess.run (["rm -rf " + kwargs["CLEMENT_DIR"] + "/candidate/*"  ], shell = True)
-            subprocess.run (["rm -rf " + kwargs["COMBINED_OUTPUT_DIR"] + "/trial/*"  ], shell = True)
-            subprocess.run (["rm -rf " + kwargs["COMBINED_OUTPUT_DIR"] + "/candidate/*"  ], shell = True)
+            # subprocess.run (["rm -rf " + kwargs["COMBINED_OUTPUT_DIR"] + "/trial/*"  ], shell = True)
+            # subprocess.run (["rm -rf " + kwargs["COMBINED_OUTPUT_DIR"] + "/candidate/*"  ], shell = True)
 
 
 
@@ -1322,7 +1322,7 @@ def decision_gapstatistics (cluster, np_vaf, np_BQ, **kwargs):
 
                 if  kwargs["VISUALIZATION"] == True:
                     drawfigure (reference_np * 2, kmeans.labels_,  kmeans.cluster_centers_.T , kwargs["CLEMENT_DIR"] + "/Kmeans/Kmeans.clone"  +   str (NUM_CLONE_ITER) + "." + str(b) + ".jpg", **kwargs)
-                    subprocess.run (["cp " + kwargs["CLEMENT_DIR"] + "/Kmeans/Kmeans.clone"  +   str (NUM_CLONE_ITER) + "." + str(b) + ".jpg " +  kwargs["COMBINED_OUTPUT_DIR"] + "/Kmeans/Kmeans.clone"  +   str (NUM_CLONE_ITER) + "." + str(b) + ".jpg"], shell = True)
+                    #subprocess.run (["cp " + kwargs["CLEMENT_DIR"] + "/Kmeans/Kmeans.clone"  +   str (NUM_CLONE_ITER) + "." + str(b) + ".jpg " +  kwargs["COMBINED_OUTPUT_DIR"] + "/Kmeans/Kmeans.clone"  +   str (NUM_CLONE_ITER) + "." + str(b) + ".jpg"], shell = True)
 
             #Gap_list [NUM_CLONE_ITER] = round ( np.mean(Wkb_list) - Wk, 3)       # 원래대로라면 np.mean(Wkb_list) - Wk 이지만, log10 씌웠다면 Wk - np.mean(Wkb_list)로 하는 것이 맞다
             Gap_list [NUM_CLONE_ITER] = round ( Wk - np.median(Wkb_list) , 3)       # 원래대로라면 np.mean(Wkb_list) - Wk 이지만, log10 씌웠다면 Wk - np.mean(Wkb_list)로 하는 것이 맞다

@@ -371,46 +371,6 @@ def RANDOM_PICK_fun(**kwargs):
     return True, kwargs
 
 
-def pyclone_dataset( DIR, **kwargs ):
-    for col in range (kwargs["NUM_BLOCK"]):
-        PYCLONE_OUTPUT=DIR + "/block" + str(col) + ".tsv"
-        with open (PYCLONE_OUTPUT, "w", encoding = "utf8") as output_pyclone:
-            print ("\t".join(["mutation_id", "ref_counts", "var_counts", "normal_cn", "minor_cn", "major_cn"]), file = output_pyclone)
-            for row in range( kwargs["RANDOM_PICK"] ):
-                pyclone_row = [mutation_id[row] , str(df[row][col]["ref"]), str(df[row][col]["alt"]), str(2), str(1), str(1)]
-                print("\t".join(pyclone_row), file = output_pyclone)
-
-def pyclonevi_dataset( DIR , **kwargs):
-    PYCLONE_VI_OUTPUT=DIR + "/input.tsv"
-    with open (PYCLONE_VI_OUTPUT, "w", encoding = "utf8") as output_pyclone_vi:
-        print ("\t".join(["mutation_id", "sample_id", "ref_counts", "alt_counts", "normal_cn", "major_cn", "minor_cn", "tumour_content"]), file = output_pyclone_vi)
-        for row in range(kwargs["RANDOM_PICK"]):
-            for col in range(kwargs["NUM_BLOCK"]):
-                pyclone_vi_row = [mutation_id[row] , "block" + str(col), str(df[row][col]["ref"]), str(df[row][col]["alt"]), str(2), str(1), str(1), str(1.0)]
-                print("\t".join(pyclone_vi_row), file = output_pyclone_vi)
-
-def sciclone_dataset( DIR, **kwargs ):
-    import re
-
-    for col in range (kwargs["NUM_BLOCK"]):
-        SCICLONE_OUTPUT=DIR + "/block" + str(col) + ".dat"
-        with open (SCICLONE_OUTPUT, "w", encoding = "utf8") as output_sciclone:
-            print ("\t".join(["chr", "pos", "ref_reads", "var_reads", "vaf"]), file = output_sciclone)
-            for row in range(kwargs["RANDOM_PICK"]):
-                sciclone_row = [re.split(r'[_ :]', mutation_id[row])[0], re.split(r'[_ :]', mutation_id[row])[1]  , str(df[row][col]["ref"]), str(df[row][col]["alt"]), str(round((df[row][col]["alt"] / ( df[row][col]["alt"] + df[row][col]["ref"] )), 3) * 100)  ]
-                print("\t".join(sciclone_row), file = output_sciclone)
-
-
-def quantumclone_dataset( DIR, **kwargs ):
-    import re
-
-    for col in range (kwargs["NUM_BLOCK"]):
-        QUANTUMCLONE_OUTPUT=DIR + "/block" + str(col) + ".dat"
-        with open (QUANTUMCLONE_OUTPUT, "w", encoding = "utf8") as output_quantumclone:
-            print ("\t".join(["Sample", "SampleName", "Chr", "Start", "Alt", "Depth", "Genotype"]), file = output_quantumclone)
-            for row in range(kwargs["RANDOM_PICK"]):
-                quantumclone_row = ["Sample" + str(col), "Sample" + str(col) , re.split(r'[_ :]', mutation_id[row])[0], re.split(r'[_ :]', mutation_id[row])[1]  , str(df[row][col]["alt"]), str(df[row][col]["ref"] + df[row][col]["alt"]),  "AB"  ]
-                print("\t".join(quantumclone_row), file = output_quantumclone)
 
 
 
@@ -420,14 +380,5 @@ def main (**kwargs):
 
     kwargs = makedf( **kwargs)
     check, kwargs = RANDOM_PICK_fun(**kwargs)
-
-    if check == True:
-        if type(kwargs["PYCLONEVI_DIR"]) == type("string"):
-            pyclonevi_dataset( kwargs["PYCLONEVI_DIR"], **kwargs )
-        if type(kwargs["SCICLONE_DIR"]) == type("string"):
-            sciclone_dataset( kwargs["SCICLONE_DIR"], **kwargs )
-        if type(kwargs["QUANTUMCLONE_DIR"]) == type("string"):
-            quantumclone_dataset( kwargs["QUANTUMCLONE_DIR"], **kwargs )
-
             
     return (input_containpos, inputdf, df, np_vaf, np_BQ, membership_answer, mixture_answer, mutation_id, kwargs)

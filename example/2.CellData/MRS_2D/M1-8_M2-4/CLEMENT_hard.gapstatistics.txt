@@ -1,0 +1,61 @@
+NUM_CLONE_ITER == 3
+	includefp = False (fp_index = -1)		-> 500
+NUM_CLONE_ITER == 4
+	includefp = False (fp_index = 4)		-> 500
+		(CLEMENT) Sum of cluster0 : -112.87 (n = 94)
+		(CLEMENT) Sum of cluster1 : -532.95 (n = 228)
+		(CLEMENT) Sum of cluster2 : -107.96 (n = 78)
+		(CLEMENT) Sum of cluster3 : -273.59 (n = 100)
+	(CLEMENT)	Wk  : -1027.4
+		(BACKGROUND) Sum of cluster0 : -390.94 (n = 175)
+		(BACKGROUND) Sum of cluster1 : -310.69 (n = 142)
+		(BACKGROUND) Sum of cluster2 : -270.56 (n = 98)
+		(BACKGROUND) Sum of cluster3 : -195.03 (n = 85)
+	(BACKGROUND)	Wkb  : -1167.2
+	Random noise (B = 5) : 	median Wkb = -1167.22	sdk = 12.052	sk (sdk * sqrt (6)) = 29.521
+	Gap (Wk - Wkb) = 139.854
+	Posterior = -1653
+NUM_CLONE_ITER == 5
+	includefp = False (fp_index = 5)		-> 500
+		(CLEMENT) Sum of cluster0 : -112.87 (n = 94)
+		(CLEMENT) Sum of cluster1 : -520.65 (n = 228)
+		(CLEMENT) Sum of cluster2 : -40.64 (n = 38)
+		(CLEMENT) Sum of cluster3 : -50.34 (n = 40)
+		(CLEMENT) Sum of cluster4 : -260.48 (n = 100)
+	(CLEMENT)	Wk  : -985.0
+		(BACKGROUND) Sum of cluster0 : -122.68 (n = 46)
+		(BACKGROUND) Sum of cluster1 : -394.98 (n = 176)
+		(BACKGROUND) Sum of cluster2 : -309.91 (n = 142)
+		(BACKGROUND) Sum of cluster3 : -192.7 (n = 84)
+		(BACKGROUND) Sum of cluster4 : -127.0 (n = 52)
+	(BACKGROUND)	Wkb  : -1147.3
+	Random noise (B = 5) : 	median Wkb = -1041.332	sdk = 57.049	sk (sdk * sqrt (6)) = 139.741
+	Gap (Wk - Wkb) = 56.357
+	Posterior = -1659
+NUM_CLONE_ITER == 6
+	includefp = False (fp_index = 6)		-> 500
+		(CLEMENT) Sum of cluster0 : -109.78 (n = 93)
+		(CLEMENT) Sum of cluster1 : -28.03 (n = 16)
+		(CLEMENT) Sum of cluster2 : -481.31 (n = 213)
+		(CLEMENT) Sum of cluster3 : -45.93 (n = 42)
+		(CLEMENT) Sum of cluster4 : -44.95 (n = 36)
+		(CLEMENT) Sum of cluster5 : -260.48 (n = 100)
+	(CLEMENT)	Wk  : -970.5
+		(BACKGROUND) Sum of cluster0 : -127.0 (n = 52)
+		(BACKGROUND) Sum of cluster1 : -304.55 (n = 140)
+		(BACKGROUND) Sum of cluster2 : -140.45 (n = 104)
+		(BACKGROUND) Sum of cluster3 : -122.68 (n = 46)
+		(BACKGROUND) Sum of cluster4 : -195.03 (n = 85)
+		(BACKGROUND) Sum of cluster5 : -105.3 (n = 73)
+	(BACKGROUND)	Wkb  : -995.0
+	Random noise (B = 5) : 	median Wkb = -999.741	sdk = 11.935	sk (sdk * sqrt (6)) = 29.235
+	Gap (Wk - Wkb) = 29.259
+	Posterior = -1721
+Gap list : [-inf 140.  56.  29.]
+S list : [  0.     29.521 139.741  29.235]
+
+Gap statistics method (max Gap): 1th ( checkall_strict == True ) optimal NUM_CLONE = 5
+Gap statistics method (max Gap): 2th ( checkall_strict == True ) optimal NUM_CLONE = 6
+Gap statistics method (max Gap): 3th ( checkall_strict == False ) optimal NUM_CLONE = 4
+Gap statistics method (max Gap): 4th ( checkall_strict == False ) optimal NUM_CLONE = 3
+

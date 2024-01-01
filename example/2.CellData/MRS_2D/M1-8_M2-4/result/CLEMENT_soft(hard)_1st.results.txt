@@ -1,0 +1,11 @@
+NUM_CLONE	5
+NUM_CHILD	5
+decision	soft(hard)_1st
+score	483/500
+ARI	0.963016336472911
+runningtime	411
+FPexistence	False
+FPindex	5
+TNindex	[0, 2, 3]
+makeone_index	[0, 1, 2, 3, 4]
+fp_member_index	[]

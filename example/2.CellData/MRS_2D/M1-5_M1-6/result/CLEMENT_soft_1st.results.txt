@@ -1,5 +1,0 @@
-NUM_CLONE	3
-NUM_CHILD	3
-runningtime	260
-FPexistence	False
-FPindex	-1

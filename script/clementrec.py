@@ -161,11 +161,12 @@ def recursive (input_containpos, df, np_vaf, np_BQ, subdim, nonzero_dim, index_i
     if kwargs["VERBOSE"] >= 1:
         print ("\n\n\n\n=============================================== STEP #6.  SCORING :  EM HARD  =======================================")
 
-    subprocess.run (["cp -r " +  kwargs["CLEMENT_DIR"]+ "/candidate  " + kwargs["COMBINED_OUTPUT_DIR"] ], shell = True)
+    #subprocess.run (["cp -r " +  kwargs["CLEMENT_DIR"]+ "/candidate  " + kwargs["COMBINED_OUTPUT_DIR"] ], shell = True)
     DECISION = "hard_1st"
     i, priority = 0, "1st"
 
     if kwargs["NUM_BLOCK"] == 1:       # 1D에서는 웬만하면 soft를 신뢰하는게 어떨까?
+
         if cluster_soft.mixture_record [ NUM_CLONE_soft[0] ] != []:
             DECISION = "soft_1st"
             soft_std = float("inf")

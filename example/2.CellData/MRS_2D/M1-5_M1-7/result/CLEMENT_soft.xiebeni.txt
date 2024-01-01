@@ -1,5 +1,0 @@
-NUM_CLONE == 5
-	includefp = True (fp_index = 1)		-> 462
-	Xie-Beni index : 3591.9381672288223
-XieBeni method (min): 1th optimal NUM_CLONE = 5
-

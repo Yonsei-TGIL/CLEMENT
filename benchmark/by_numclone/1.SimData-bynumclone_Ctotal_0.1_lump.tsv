@@ -1,0 +1,13 @@
+NUM_BLOCK	tool	MS_mean	MS_std	ARI_mean	ARI_std
+1	CLEMENT_decision	15.94	20.67	0.37	0.27
+1	pyclonevi	11.61	15.85	0.32	0.29
+1	quantumclone	12.22	16.23	0.34	0.29
+1	sciclone	11.91	16.2	0.33	0.3
+2	CLEMENT_decision	22.11	30.24	0.66	0.23
+2	pyclonevi	16.95	23.56	0.56	0.28
+2	quantumclone	16.84	23.39	0.58	0.27
+2	sciclone	16.41	23.34	0.54	0.31
+3	CLEMENT_decision	26.56	34.76	0.8	0.2
+3	pyclonevi	19.39	25.84	0.66	0.26
+3	quantumclone	20.11	26.36	0.71	0.26
+3	sciclone	19.44	26.23	0.67	0.31

@@ -1,2 +1,0 @@
-x_axis	y_axis
-2D-decoy	0.7444444444444445

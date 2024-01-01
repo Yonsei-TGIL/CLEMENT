@@ -1,0 +1,17 @@
+NUM_CLONE == 3
+	Xie-Beni index : inf
+NUM_CLONE == 4
+	Xie-Beni index : 153073.29
+NUM_CLONE == 5
+	Xie-Beni index : 816908.79
+NUM_CLONE == 6
+	Xie-Beni index : 1150766.8
+
+        XieBeni checkall
+5  8.169088e+05   strict
+4  1.530733e+05  lenient
+6  1.150767e+06  lenient
+XieBeni - 1th  →  NUM_CLONE = 5 (strict)
+XieBeni - 2th  →  NUM_CLONE = 4 (lenient)
+XieBeni - 3th  →  NUM_CLONE = 6 (lenient)
+

@@ -1,0 +1,13 @@
+NUM_CLONE	5
+NUM_CHILD	5
+decision	hard_1st
+score	484/500
+ARI	0.96
+runningtime	410
+FPexistence	False
+FPindex	5
+TNindex	[0, 2, 3]
+makeone_index	[0, 1, 2, 3, 4]
+fp_member_index	[]
+rescue_data	[127, 176, 179, 204, 237, 250, 270, 292, 306, 339, 344, 355, 379, 399, 441, 486]
+len(rescue_data)	16

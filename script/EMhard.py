@@ -47,7 +47,7 @@ def main (input_containpos, df, np_vaf, np_BQ, mixture_kmeans, **kwargs):
                 step, kwargs = miscellaneous.set_initial_parameter(np_vaf, mixture_kmeans, 
                                                                 kwargs["CLEMENT_DIR"] + "/trial/clone" + str(NUM_CLONE) + "." + str(kwargs["TRIAL"]) + "-0.initial_kmeans(hard)." + kwargs["IMAGE_FORMAT"] ,
                                                                 step, trial, **kwargs)
-                subprocess.run(["cp -rf " + kwargs["CLEMENT_DIR"] + "/trial/clone" + str(NUM_CLONE) + "." + str(kwargs["TRIAL"]) + "-0.initial_kmeans\(hard\)." + kwargs["IMAGE_FORMAT"] + " " + kwargs["COMBINED_OUTPUT_DIR"] + "/trial/clone" + str(NUM_CLONE) + "." + str(kwargs["TRIAL"]) + "-0.initial_kmeans\(hard\)." + kwargs["IMAGE_FORMAT"]], shell=True)
+                #subprocess.run(["cp -rf " + kwargs["CLEMENT_DIR"] + "/trial/clone" + str(NUM_CLONE) + "." + str(kwargs["TRIAL"]) + "-0.initial_kmeans\(hard\)." + kwargs["IMAGE_FORMAT"] + " " + kwargs["COMBINED_OUTPUT_DIR"] + "/trial/clone" + str(NUM_CLONE) + "." + str(kwargs["TRIAL"]) + "-0.initial_kmeans\(hard\)." + kwargs["IMAGE_FORMAT"]], shell=True)
                 
 
                 if kwargs["VERBOSE"] >= 1:
@@ -184,8 +184,6 @@ def main (input_containpos, df, np_vaf, np_BQ, mixture_kmeans, **kwargs):
                 if trial.max_step_index_record [i]  != -1:   # If available in this trial
                     os.system ("cp " + kwargs["CLEMENT_DIR"] + "/trial/clone" + str(kwargs["NUM_CLONE_ITER"]) + "." + str( i ) + "-"  + str(  trial.max_step_index_record [i]  ) + "\(hard\)." + kwargs["IMAGE_FORMAT"] + " " + 
                         kwargs["CLEMENT_DIR"] + "/candidate/clone" + str(kwargs["NUM_CLONE_ITER"]) + ".\(hard\)." + kwargs["IMAGE_FORMAT"]  ) 
-                    os.system ("cp " + kwargs["CLEMENT_DIR"] + "/trial/clone" + str(kwargs["NUM_CLONE_ITER"]) + "." + str( i ) + "-"  + str(  trial.max_step_index_record [i]  ) + "\(hard\)." + kwargs["IMAGE_FORMAT"] + " " + 
-                        kwargs["COMBINED_OUTPUT_DIR"] + "/candidate/clone" + str(kwargs["NUM_CLONE_ITER"]) + ".\(hard\)." + kwargs["IMAGE_FORMAT"]  ) 
                 cluster.acc ( trial.mixture_record [i], trial.membership_record [i], trial.posterior_record [i], trial.likelihood_record [i], trial.membership_p_record [i], trial.membership_p_normalize_record [i], trial.stepindex_record [i], i, trial.max_step_index_record [i], trial.makeone_index_record[i], trial.checkall_strict_record[i], trial.checkall_lenient_record[i],   trial.tn_index_record[i],  trial.fp_index_record[i], trial.includefp_record[i], trial.fp_involuntary_record[i], trial.fp_member_index_record [i], **kwargs )  
             
 

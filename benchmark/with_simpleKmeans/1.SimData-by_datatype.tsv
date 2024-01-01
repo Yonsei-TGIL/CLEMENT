@@ -1,0 +1,15 @@
+DATA_TYPE	tool	EC
+decoy	CLEMENT_decision	0.22333333333333336
+decoy	pyclonevi	1.4566666666666668
+decoy	quantumclone	1.37
+decoy	sciclone	1.2299999999999998
+decoy	simpleK_elbow	1.5899999999999999
+decoy	simpleK_gap	1.8233333333333333
+decoy	simpleK_silhouette	1.6300000000000001
+lump	CLEMENT_decision	0.18333333333333335
+lump	pyclonevi	2.5933333333333333
+lump	quantumclone	2.4433333333333334
+lump	sciclone	2.5433333333333334
+lump	simpleK_elbow	1.6833333333333333
+lump	simpleK_gap	2.0366666666666666
+lump	simpleK_silhouette	2.1733333333333333

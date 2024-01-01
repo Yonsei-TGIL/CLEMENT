@@ -1,5 +1,0 @@
-	x_axis	CLEMENT_decision	pyclonevi	quantumclone	sciclone
-0	1D	0.69	2.94	3.03	2.62
-1	2D	0.62	2.64	2.74	2.15
-2	3D	0.54	2.45	2.49	1.9
-mean		0.62	2.68	2.75	2.22

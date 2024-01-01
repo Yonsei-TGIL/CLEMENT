@@ -1,0 +1,13 @@
+NUM_BLOCK	tool	RMSE_mean	MS_mean	ARI_mean
+1	CLEMENT_decision	1.23	63.78 (99.5-107.9% ↑)	0.48
+1	pyclonevi	1.38	64.08	0.5
+1	quantumclone	1.62	63.8	0.5
+1	sciclone	1.55	59.1	0.44
+2	CLEMENT_decision	0.76	73.89 (110.9-114.2% ↑)	0.64
+2	pyclonevi	1.75	66.62	0.63
+2	quantumclone	1.72	64.72	0.59
+2	sciclone	1.5	65.07	0.6
+3	CLEMENT_decision	1.1	77.72 (114.6-126.9% ↑)	0.71
+3	pyclonevi	2.14	67.8	0.68
+3	quantumclone	3.76	61.23	0.59
+3	sciclone	1.84	63.1	0.61

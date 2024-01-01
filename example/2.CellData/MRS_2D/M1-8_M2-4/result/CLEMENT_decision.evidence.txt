@@ -1,0 +1,3 @@
+DECISION : soft_1st
+hard_mixture : [[0.1     0.29088 0.62858 0.     ]]
+	soft_mixture : [[0.11858 0.31568 0.633   0.     ]]
