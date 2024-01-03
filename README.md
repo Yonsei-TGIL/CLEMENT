@@ -7,7 +7,7 @@
 ## Overview of CLEMENT workflow and core algorithms
 <br/>
 
-![Figure1 overview](https://user-images.githubusercontent.com/56012432/195979886-cd29df09-8291-4150-9001-db7dde5e7567.png)
+![CLEMENT_overview](https://github.com/Yonsei-TGIL/CLEMENT/assets/111939069/e8ff11b3-5fa8-4e2e-b045-47e4da90b01c)
 <br/>
 
 ## Installation
