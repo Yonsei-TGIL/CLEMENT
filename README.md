@@ -74,7 +74,7 @@ As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input
 	Miscelleneous
 		--FONT_FAMILY		Font family that displayed in the plots (default : "arial")
   		--VISUALIZATION		Whether produce image in every E-M step (default: True)
-    		--IMAGE_FORMAT		Image format that displayed in the plots (default : jpg)
+		--IMAGE_FORMAT		Image format that displayed in the plots (default : jpg)
 		--VERBOSE		0: no record,  1: simplified record,  2: verbose record (default: 2)
 
 
@@ -94,9 +94,9 @@ As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input
 
 	# Example 1
  	CLEMENT \
-  		--INPUT_TSV ${DIR}"/example/1.SimData/SimData_1D/n500_125x/lump/0.0/clone_4/1/1.txt"
-    		--CLEMENT_DIR ${DIR}"/example/1.SimData/SimData_1D/n500_125x/lump/0.0/clone_4/1"
-      		--NUM_CLONE_TRIAL_START 1
+  		--INPUT_TSV ${DIR}"/example/1.SimData/SimData_1D/n500_125x/lump/0.0/clone_4/1/1.txt" \
+    		--CLEMENT_DIR ${DIR}"/example/1.SimData/SimData_1D/n500_125x/lump/0.0/clone_4/1" \
+      		--NUM_CLONE_TRIAL_START 1 \
 		--NUM_CLONE_TRIAL_END 5 
   
  	# Example 2
