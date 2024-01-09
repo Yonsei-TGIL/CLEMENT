@@ -1,5 +1,5 @@
 # CLEMENT
-- Genomic decomposition and reconstruction of **non-tumor** diploid subclones (2022)
+- Genomic decomposition and reconstruction of **non-tumor** diploid subclones (2023)
 - CLonal decomposition via Expectation-Maximization algorithm established in Non-Tumor setting
 - Support multiple diploid sample
 - Biallelic variants (Homo, 1/1) can degrade the performance of CLEMENT.
@@ -32,7 +32,7 @@
 3. pip3 install CLEMENTDNA   
 
 ## Version update
-1.0.4 (June 14h, 2023)
+1.0.5 (Jan 1st, 2024)
 
 ## Input format
 As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input file is shown in _"example"_ directory.
@@ -59,18 +59,23 @@ As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input
 		--NUM_CLONE_TRIAL_START 	Minimum number of expected cluster_hards (initation of K) 	(default: 3)
 		--NUM_CLONE_TRIAL_END 		Maximum number of expected cluster_hards (termination of K)	 (default: 5)
 		--TRIAL_NO 			Trial number in each candidate cluster_hard number. DO NOT recommend over 15 (default: 5)
+    		--FP_PRIOR FP_PRIOR   		Prior of false positive (FP) being generated. Recommendation : <= 0.1. Default : 0.01
+  		--TN_PRIOR TN_PRIOR   		Confidentiality that negative being negative (TN). Recommendation : > 0.99. Default : 0.99
 		--KMEANS_CLUSTERNO		Number of initial K-means cluster. Recommendation : 5~8 for one-sample, 8-15 for larger-sample (default: 8)
 		--MIN_CLUSTER_SIZE		The minimum cluster size that is acceptable. Recommendation : 1-3% of total variants number 	(default: 9)
 
 	Other options
 		--MODE			Selection of clustering method.
 					"Hard": hard clustering only,  "Both": both hard and soft (fuzzy) clustering (default: "Both")
-		--MAKEONE_STRICT  	1: strict, 2: lenient (default : 1)
-		--TN_CONFIDENTIALITY  	Confidentiality that negative being negative (TN). Recommendation : > 0.99. (default : 0.995)
+		--MAKEONE_STRICT  	1: strict, 2: lenient, 3: most lenient (default : 1)
+  		--SCORING		True : comparing with the answer set, False : just visualization (default: False)
+		
 
 	Miscelleneous
 		--FONT_FAMILY		Font family that displayed in the plots (default : "arial")
-		--VERBOSE			0: no record,  1: simplified record,  2: verbose record (default: 2)
+  		--VISUALIZATION		Whether produce image in every E-M step (default: True)
+    		--IMAGE_FORMAT		Image format that displayed in the plots (default : jpg)
+		--VERBOSE		0: no record,  1: simplified record,  2: verbose record (default: 2)
 
 
 ### output
@@ -89,18 +94,12 @@ As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input
 
 	# Example 1
 	CLEMENT \
-		--INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6/M1-5_M1-6_input.txt" \
-		--CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-6"  \
+		--INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-8_M2-4/M1-8_M2-4_input.txt" \
+		--CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-8_M2-4"  \
 		--NUM_CLONE_TRIAL_START 2 \
 		--NUM_CLONE_TRIAL_END 6 \
 		--RANDOM_PICK 500
 	
-	# Example 2
-	CLEMENT \
-		--INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-7/M1-5_M1-7_input.txt" \
-		--CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-5_M1-7"  \
-		--NUM_CLONE_TRIAL_START 2 \
-		--NUM_CLONE_TRIAL_END 6
 		
 
 
