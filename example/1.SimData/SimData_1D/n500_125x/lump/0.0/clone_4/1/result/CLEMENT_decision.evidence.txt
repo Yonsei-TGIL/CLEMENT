@@ -1,0 +1,5 @@
+DECISION	soft_1st
+hard_mixture	[0.04 0.21 0.31 0.44 0.  ]
+soft_mixture	[0.06 0.28 0.32 0.36 0.  ]
+soft 선택기준 > 0.18
+posterior_sim	0.59

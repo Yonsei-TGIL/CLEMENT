@@ -1,11 +1,11 @@
 example/*/*/*/Kmeans
 example/*/*/*/trial
-example/*/*/*/[0]
-example/*/*/*/[1]
+example/*/*/*/\[0\]
+example/*/*/*/\[1\]
 example/*/*/*/0.input*txt
 example/*/*/*/npvaf.txt
 example/*/*/*/*temp*
-recipes
+recipes/*
 build
 CLEMENTDNA.egg-info
 dist

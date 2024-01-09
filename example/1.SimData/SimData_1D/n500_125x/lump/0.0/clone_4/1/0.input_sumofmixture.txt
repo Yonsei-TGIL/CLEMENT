@@ -1,0 +1,1 @@
+Sum of mixture (except FP) in sample 0 : 1.00853

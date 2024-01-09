@@ -3,7 +3,7 @@ NUM_CHILD	5
 decision	hard_1st
 score	484/500
 ARI	0.96
-runningtime	410
+runningtime	409
 FPexistence	False
 FPindex	5
 TNindex	[0, 2, 3]
