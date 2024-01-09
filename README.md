@@ -59,8 +59,8 @@ As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input
 		--NUM_CLONE_TRIAL_START 	Minimum number of expected cluster_hards (initation of K) 	(default: 3)
 		--NUM_CLONE_TRIAL_END 		Maximum number of expected cluster_hards (termination of K)	 (default: 5)
 		--TRIAL_NO 			Trial number in each candidate cluster_hard number. DO NOT recommend over 15 (default: 5)
-    		--FP_PRIOR FP_PRIOR   		Prior of false positive (FP) being generated. Recommendation : <= 0.1. Default : 0.01
-  		--TN_PRIOR TN_PRIOR   		Confidentiality that negative being negative (TN). Recommendation : > 0.99. Default : 0.99
+    		--FP_PRIOR FP_PRIOR   		Prior of false positive (FP) being generated. Recommendation : <= 0.1. (default : 0.01)
+  		--TN_PRIOR TN_PRIOR   		Confidentiality that negative being negative (TN). Recommendation : > 0.99. (default : 0.99)
 		--KMEANS_CLUSTERNO		Number of initial K-means cluster. Recommendation : 5~8 for one-sample, 8-15 for larger-sample (default: 8)
 		--MIN_CLUSTER_SIZE		The minimum cluster size that is acceptable. Recommendation : 1-3% of total variants number 	(default: 9)
 
@@ -93,6 +93,13 @@ As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input
 	DIR=[YOUR_DIRECTORY]
 
 	# Example 1
+ 	CLEMENT \
+  		--INPUT_TSV ${DIR}"/example/1.SimData/SimData_1D/n500_125x/lump/0.0/clone_4/1/1.txt"
+    		--CLEMENT_DIR ${DIR}"/example/1.SimData/SimData_1D/n500_125x/lump/0.0/clone_4/1"
+      		--NUM_CLONE_TRIAL_START 1
+		--NUM_CLONE_TRIAL_END 5 
+  
+ 	# Example 2
 	CLEMENT \
 		--INPUT_TSV ${DIR}"/example/2.CellData/MRS_2D/M1-8_M2-4/M1-8_M2-4_input.txt" \
 		--CLEMENT_DIR ${DIR}"/example/2.CellData/MRS_2D/M1-8_M2-4"  \
