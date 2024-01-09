@@ -10,3 +10,4 @@ build
 CLEMENTDNA.egg-info
 dist
 setup.cfg
+.pypirc

@@ -4,6 +4,8 @@ def main():
     import pandas as pd
 
     print ( "Package directory : {}\n".format (  os.path.dirname(__file__) ) )
+    #  /opt/Yonsei/python/3.8.1/lib/python3.8/site-packages/CLEMENT
+    # /home/goldpm1/miniconda3/envs/cnvpytor/lib/python3.7/site-packages/script
     SCRIPT_DIR = os.path.dirname(__file__)
     if os.path.dirname(__file__) not in sys.path:
         sys.path.append  ( os.path.dirname(__file__) )

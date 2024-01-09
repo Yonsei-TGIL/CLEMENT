@@ -32,7 +32,7 @@
 3. pip3 install CLEMENTDNA   
 
 ## Version update
-1.0.5 (Jan 1st, 2024)
+1.0.11 (Jan 1st, 2024)
 
 ## Input format
 As now of 1.0.4, CLEMENT only supports standardized TSV input. Examples of input file is shown in _"example"_ directory.

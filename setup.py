@@ -5,10 +5,14 @@ import setuptools
 # aa = setuptools.find_packages(where="scripts")
 # print(aa)
 
-
+with open('README.md', encoding='utf-8') as f:
+    long_description = f.read()
+    
 setuptools.setup(
     name             = 'CLEMENTDNA',
-    version          = '1.1.0',
+    version          = '1.0.11',
+    long_description = long_description,
+    long_description_content_type='text/markdown',
     description      = 'Genomic decomposition and reconstruction of non-tumor diploid subclones',
     author           = 'Young-soo Chung, M.D.',
     author_email     = 'goldpm1@yuhs.ac',
